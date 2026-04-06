@@ -1,0 +1,68 @@
+---
+import NavBar from '../components/NavBar.astro';
+import '../styles/global.css';
+
+interface Props {
+  title: string;
+  requiresAuth?: boolean;
+  customerOnly?: boolean;
+}
+
+const { title, requiresAuth = false, customerOnly = false } = Astro.props;
+---
+
+<!doctype html>
+<html lang="es-SV">
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="viewport" content="width=device-width" />
+		<link rel="icon" type="image/png" href="/logo.png" />
+		<meta name="generator" content={Astro.generator} />
+		<title>{title}</title>
+	</head>
+	<body class="min-h-screen bg-white text-slate-900">
+		{requiresAuth && (
+			customerOnly ? (
+				<script is:inline>
+					if (typeof window !== 'undefined') {
+						const rawSession = window.localStorage.getItem('aloha_session');
+
+						if (!rawSession) {
+							window.location.replace('/');
+						} else {
+							try {
+								const session = JSON.parse(rawSession);
+
+								if (session.role === 'admin') {
+									window.location.replace('/admin');
+								}
+							} catch {
+								window.location.replace('/');
+							}
+						}
+					}
+				</script>
+			) : (
+				<script is:inline>
+					if (typeof window !== 'undefined') {
+						const rawSession = window.localStorage.getItem('aloha_session');
+
+						if (!rawSession) {
+							window.location.replace('/');
+						}
+					}
+				</script>
+			)
+		)}
+
+		<div class="min-h-screen bg-[radial-gradient(circle_at_top,_rgba(255,215,0,0.18),_transparent_28%),linear-gradient(180deg,_#ffffff_0%,_#fdf2ff_45%,_#f8fafc_100%)]">
+			<NavBar />
+			<main>
+				<slot />
+			</main>
+			<footer class="border-t border-brand/10 bg-white/70 px-6 py-6 text-center text-sm text-text-muted backdrop-blur-sm">
+				© 2026 Aloha Loyalty. El Salvador.
+			</footer>
+		</div>
+	</body>
+</html>

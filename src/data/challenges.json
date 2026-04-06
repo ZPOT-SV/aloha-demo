@@ -1,0 +1,42 @@
+[
+  {
+    "id": "c1",
+    "name": "Comprador Frecuente",
+    "description": "Realiza 3 compras durante el mes para ganar un bono.",
+    "targetCount": 3,
+    "currentCount": 2,
+    "bonusTiki": 20,
+    "isCompleted": false,
+    "isLocked": false
+  },
+  {
+    "id": "c2",
+    "name": "Fan de los Bowls",
+    "description": "Compra 5 bowls y recibe tikis extra por tu lealtad.",
+    "targetCount": 5,
+    "currentCount": 5,
+    "bonusTiki": 30,
+    "isCompleted": true,
+    "isLocked": false
+  },
+  {
+    "id": "c3",
+    "name": "Madrugador",
+    "description": "Haz 2 compras antes de las 10:00 AM para desbloquear el bono.",
+    "targetCount": 2,
+    "currentCount": 0,
+    "bonusTiki": 15,
+    "isCompleted": false,
+    "isLocked": false
+  },
+  {
+    "id": "c4",
+    "name": "Embajador",
+    "description": "Invita a 1 amigo nuevo a unirse al programa de lealtad.",
+    "targetCount": 1,
+    "currentCount": 0,
+    "bonusTiki": 50,
+    "isCompleted": false,
+    "isLocked": true
+  }
+]

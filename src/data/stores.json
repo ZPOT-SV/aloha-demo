@@ -1,0 +1,42 @@
+[
+  {
+    "id": "s1",
+    "name": "Aloha Beverages Multiplaza",
+    "address": "Centro Comercial Multiplaza, Antiguo Cuscatlán, La Libertad",
+    "phone": "+503 2234-5501",
+    "hours": "Lunes a Domingo 8:00 AM – 8:00 PM",
+    "lat": 13.6929,
+    "lng": -89.2182
+  },
+  {
+    "id": "s2",
+    "name": "Aloha Bowls Santa Elena",
+    "address": "Boulevard Santa Elena, Antiguo Cuscatlán, La Libertad",
+    "phone": "+503 2234-5502",
+    "hours": "Lunes a Domingo 8:00 AM – 8:00 PM",
+    "lat": 13.6789,
+    "lng": -89.2456
+  },
+  {
+    "id": "s3",
+    "name": "Aloha Express San Benito",
+    "address": "Avenida La Capilla, San Benito, San Salvador",
+    "phone": "+503 2234-5503",
+    "hours": "Lunes a Domingo 8:00 AM – 8:00 PM",
+    "lat": 13.7012,
+    "lng": -89.2334
+  },
+  {
+    "id": "s4",
+    "name": "Rise Up Bowls — CC. Hillside",
+    "address": "CC. Hillside, El Salvador",
+    "phone": "+503 7000-0000",
+    "hours": {
+      "lunes-viernes": "9:30 AM – 6:00 PM",
+      "sabado": "9:30 AM – 2:00 PM",
+      "domingo": "Cerrado"
+    },
+    "lat": 13.6789,
+    "lng": -89.2456
+  }
+]

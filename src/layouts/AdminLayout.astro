@@ -1,0 +1,106 @@
+---
+import '../styles/global.css';
+
+interface Props {
+  title: string;
+}
+
+const { title } = Astro.props;
+const pathname = Astro.url.pathname;
+
+const navItems = [
+  { href: '/admin', label: 'Dashboard' },
+  { href: '/admin/recompensas', label: 'Planes de Recompensa' },
+  { href: '/admin/otorgar', label: 'Otorgar Puntos' },
+  { href: '/admin/canjear', label: 'Canjear Cupón' }
+];
+---
+
+<!doctype html>
+<html lang="es-SV">
+  <head>
+    <meta charset="UTF-8" />
+    <meta content="width=device-width" name="viewport" />
+    <link href="/logo.png" rel="icon" type="image/png" />
+    <meta content={Astro.generator} name="generator" />
+    <title>{title}</title>
+  </head>
+  <body class="min-h-screen bg-slate-100 text-slate-900">
+    <script is:inline>
+      if (typeof window !== 'undefined') {
+        const rawSession = window.localStorage.getItem('aloha_session');
+
+        if (!rawSession) {
+          window.location.replace('/');
+        } else {
+          try {
+            const session = JSON.parse(rawSession);
+
+            if (session.role !== 'admin') {
+              window.location.replace('/');
+            }
+          } catch {
+            window.location.replace('/');
+          }
+        }
+      }
+    </script>
+
+    <div class="flex min-h-screen">
+      <aside class="fixed inset-y-0 left-0 flex w-60 flex-col bg-brand px-6 py-8 text-white">
+        <div class="flex flex-col items-center gap-2 px-4 py-6 border-b border-white/20">
+          <img
+            src="/logo.png"
+            alt="Aloha Loyalty"
+            class="h-16 w-auto object-contain"
+          />
+          <span class="text-xs text-white/70 font-medium tracking-widest uppercase">
+            Panel Admin
+          </span>
+        </div>
+
+        <nav class="mt-10 flex flex-1 flex-col gap-2">
+          {navItems.map((item) => {
+            const isActive = pathname === item.href;
+
+            return (
+              <a
+                class:list={[
+                  'border-l-4 px-4 py-3 text-sm font-bold transition',
+                  isActive
+                    ? 'border-cta bg-white/10 text-white'
+                    : 'border-transparent text-white/75 hover:border-cta/60 hover:bg-white/5 hover:text-white'
+                ]}
+                href={item.href}
+              >
+                {item.label}
+              </a>
+            );
+          })}
+        </nav>
+
+        <button
+          class="mt-8 text-left text-sm font-bold text-white/85 transition hover:text-white"
+          id="admin-logout"
+          type="button"
+        >
+          Cerrar Sesión
+        </button>
+      </aside>
+
+      <main class="ml-60 min-h-screen flex-1 bg-white p-6">
+        <slot />
+      </main>
+    </div>
+
+    <script is:inline>
+      const logoutButton = document.getElementById('admin-logout');
+
+      logoutButton?.addEventListener('click', () => {
+        window.localStorage.removeItem('aloha_session');
+        window.localStorage.removeItem('aloha_tikis');
+        window.location.href = '/';
+      });
+    </script>
+  </body>
+</html>

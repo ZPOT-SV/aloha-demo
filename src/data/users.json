@@ -1,0 +1,29 @@
+[
+  {
+    "id": "u1",
+    "username": "carlos",
+    "name": "Carlos Martínez",
+    "role": "customer",
+    "tikiBalance": 142,
+    "tierId": "vibe",
+    "createdAt": "2026-01-10T14:30:00.000Z"
+  },
+  {
+    "id": "u2",
+    "username": "maria",
+    "name": "María López",
+    "role": "customer",
+    "tikiBalance": 32,
+    "tierId": "rise",
+    "createdAt": "2026-02-03T09:15:00.000Z"
+  },
+  {
+    "id": "u3",
+    "username": "admin",
+    "name": "Administrador",
+    "role": "admin",
+    "tikiBalance": 0,
+    "tierId": null,
+    "createdAt": "2026-01-01T08:00:00.000Z"
+  }
+]

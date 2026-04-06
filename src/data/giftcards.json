@@ -1,0 +1,20 @@
+[
+  {
+    "id": "g1",
+    "fromUserId": "u2",
+    "toUserId": "u1",
+    "valueUSD": 10,
+    "valueTiki": 100,
+    "isRedeemed": false,
+    "createdAt": "2026-03-20T16:45:00.000Z"
+  },
+  {
+    "id": "g2",
+    "fromUserId": "u1",
+    "toUserId": "u2",
+    "valueUSD": 15,
+    "valueTiki": 150,
+    "isRedeemed": true,
+    "createdAt": "2026-03-05T11:20:00.000Z"
+  }
+]

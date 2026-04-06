@@ -1,0 +1,15 @@
+---
+import AwardPoints from '../../components/admin/AwardPoints';
+import AdminLayout from '../../layouts/AdminLayout.astro';
+---
+
+<AdminLayout title="Otorgar Puntos | Aloha Loyalty">
+  <div class="space-y-6">
+    <header>
+      <p class="text-sm font-semibold uppercase tracking-[0.24em] text-text-muted">Otorgar puntos</p>
+      <h1 class="mt-2 text-4xl font-black text-slate-950">Asigná Tikis manualmente a clientes</h1>
+    </header>
+
+    <AwardPoints client:load />
+  </div>
+</AdminLayout>

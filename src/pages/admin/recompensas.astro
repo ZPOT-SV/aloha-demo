@@ -1,0 +1,15 @@
+---
+import AdminDashboard from '../../components/admin/AdminDashboard';
+import AdminLayout from '../../layouts/AdminLayout.astro';
+---
+
+<AdminLayout title="Planes de Recompensa | Aloha Loyalty">
+  <div class="space-y-6">
+    <header>
+      <p class="text-sm font-semibold uppercase tracking-[0.24em] text-text-muted">Recompensas</p>
+      <h1 class="mt-2 text-4xl font-black text-slate-950">Administrá planes y canjes activos</h1>
+    </header>
+
+    <AdminDashboard client:load />
+  </div>
+</AdminLayout>

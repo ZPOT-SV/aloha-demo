@@ -1,0 +1,267 @@
+[
+  {
+    "id": "m1",
+    "name": "Americano 12oz",
+    "description": "",
+    "category": "bebidas",
+    "subCategory": "cafes",
+    "priceUSD": 2.5,
+    "tikiEarn": 2,
+    "imageUrl": ""
+  },
+  {
+    "id": "m2",
+    "name": "Latte 12oz",
+    "description": "Shot de espresso con leche",
+    "category": "bebidas",
+    "subCategory": "cafes",
+    "priceUSD": 3.75,
+    "tikiEarn": 3,
+    "imageUrl": ""
+  },
+  {
+    "id": "m3",
+    "name": "Cold Brew 12oz",
+    "description": "Shot de espreso con leche entera",
+    "category": "bebidas",
+    "subCategory": "cafes",
+    "priceUSD": 3.5,
+    "tikiEarn": 3,
+    "imageUrl": ""
+  },
+  {
+    "id": "m4",
+    "name": "Frozen de Café 12oz",
+    "description": "Leche entera",
+    "category": "bebidas",
+    "subCategory": "cafes",
+    "priceUSD": 3,
+    "tikiEarn": 3,
+    "imageUrl": ""
+  },
+  {
+    "id": "m5",
+    "name": "Detox",
+    "description": "Piña, zanahoria, jengibre y limón",
+    "category": "bebidas",
+    "subCategory": "jugos",
+    "priceUSD": 3,
+    "tikiEarn": 3,
+    "imageUrl": "",
+    "calories": 90,
+    "sizesUSD": {
+      "12oz": 3,
+      "16oz": 3.75
+    }
+  },
+  {
+    "id": "m6",
+    "name": "Green Life",
+    "description": "Piña, kiwi, perejil, gengibre y canela",
+    "category": "bebidas",
+    "subCategory": "jugos",
+    "priceUSD": 3,
+    "tikiEarn": 3,
+    "imageUrl": "",
+    "calories": 75,
+    "sizesUSD": {
+      "12oz": 3,
+      "16oz": 3.75
+    }
+  },
+  {
+    "id": "m7",
+    "name": "El Clásico",
+    "description": "Zanahoria y naranja",
+    "category": "bebidas",
+    "subCategory": "jugos",
+    "priceUSD": 3,
+    "tikiEarn": 3,
+    "imageUrl": "",
+    "calories": 88,
+    "sizesUSD": {
+      "12oz": 3,
+      "16oz": 3.75
+    }
+  },
+  {
+    "id": "m8",
+    "name": "Mojito",
+    "description": "Pepino, menta, limón y fresas",
+    "category": "bebidas",
+    "subCategory": "jugos",
+    "priceUSD": 3,
+    "tikiEarn": 3,
+    "imageUrl": "",
+    "calories": 60,
+    "sizesUSD": {
+      "12oz": 3,
+      "16oz": 3.75
+    }
+  },
+  {
+    "id": "m9",
+    "name": "Dragon Fruit",
+    "description": "Granola, banana, piña, mantequilla de maní y miel",
+    "category": "bowls",
+    "subCategory": "dragon-fruit",
+    "priceUSD": 7,
+    "tikiEarn": 7,
+    "imageUrl": "",
+    "calories": 270
+  },
+  {
+    "id": "m10",
+    "name": "Sand",
+    "description": "Granola, banana, arándanos con topping de miel",
+    "category": "bowls",
+    "subCategory": "dragon-fruit",
+    "priceUSD": 7,
+    "tikiEarn": 7,
+    "imageUrl": "",
+    "calories": 219
+  },
+  {
+    "id": "m11",
+    "name": "Dragon Lover",
+    "description": "Granola, banana, piña y kiwi, mantequilla de almendras",
+    "category": "bowls",
+    "subCategory": "dragon-fruit",
+    "priceUSD": 7,
+    "tikiEarn": 7,
+    "imageUrl": "",
+    "calories": 263
+  },
+  {
+    "id": "m12",
+    "name": "Marea Baja",
+    "description": "Granola, fresas, banana, mantequilla de maní y miel",
+    "category": "bowls",
+    "subCategory": "dragon-fruit",
+    "priceUSD": 7,
+    "tikiEarn": 7,
+    "imageUrl": "",
+    "calories": 233
+  },
+  {
+    "id": "m13",
+    "name": "Sivar",
+    "description": "Granola, banana, fresa, piña con topping de miel",
+    "category": "bowls",
+    "subCategory": "acai",
+    "priceUSD": 7,
+    "tikiEarn": 7,
+    "imageUrl": "",
+    "calories": 194
+  },
+  {
+    "id": "m14",
+    "name": "La Costa",
+    "description": "Granola, fresas, piña, kiwi, rayadura de coco con miel",
+    "category": "bowls",
+    "subCategory": "acai",
+    "priceUSD": 7,
+    "tikiEarn": 7,
+    "imageUrl": "",
+    "calories": 243
+  },
+  {
+    "id": "m15",
+    "name": "Coco Loco",
+    "description": "Granola, banana, rayadura de coco, miel, mantequilla de almendras",
+    "category": "bowls",
+    "subCategory": "acai",
+    "priceUSD": 7,
+    "tikiEarn": 7,
+    "imageUrl": "",
+    "calories": 201
+  },
+  {
+    "id": "m16",
+    "name": "Sunset",
+    "description": "Granola, banana con topping de mantequilla de maní y miel",
+    "category": "bowls",
+    "subCategory": "acai",
+    "priceUSD": 7,
+    "tikiEarn": 7,
+    "imageUrl": "",
+    "calories": 235
+  },
+  {
+    "id": "m17",
+    "name": "The Brazilian",
+    "description": "Granola, leche en polvo, leche condensada, banana y rayadura de coco",
+    "category": "bowls",
+    "subCategory": "acai",
+    "priceUSD": 7,
+    "tikiEarn": 7,
+    "imageUrl": "",
+    "calories": 303
+  },
+  {
+    "id": "m18",
+    "name": "Nutella",
+    "description": "Granola, banana, fresas, Nutella, mantequilla de maní, rayadura de coco",
+    "category": "bowls",
+    "subCategory": "banana",
+    "priceUSD": 6.5,
+    "tikiEarn": 6,
+    "imageUrl": "",
+    "calories": 314
+  },
+  {
+    "id": "m19",
+    "name": "Banana Mix",
+    "description": "Granola, arándanos, banana y fresas",
+    "category": "bowls",
+    "subCategory": "banana",
+    "priceUSD": 6.5,
+    "tikiEarn": 6,
+    "imageUrl": "",
+    "calories": 204
+  },
+  {
+    "id": "m20",
+    "name": "Chocobanana Boost",
+    "description": "Granola, banana, proteína de chocolate, mantequilla de maní y nutella. Proteína 35gr.",
+    "category": "bowls",
+    "subCategory": "banana",
+    "priceUSD": 7.5,
+    "tikiEarn": 7,
+    "imageUrl": "",
+    "calories": 305
+  },
+  {
+    "id": "m21",
+    "name": "Especial Temporada — Dragon Lover",
+    "description": "Granola, banana, piña y kiwi, mantequilla de almendras",
+    "category": "temporada",
+    "subCategory": "temporada",
+    "priceUSD": 7,
+    "tikiEarn": 7,
+    "imageUrl": "",
+    "calories": 263
+  },
+  {
+    "id": "m22",
+    "name": "Especial Temporada — La Costa",
+    "description": "Granola, fresas, piña, kiwi, rayadura de coco con miel",
+    "category": "temporada",
+    "subCategory": "temporada",
+    "priceUSD": 7,
+    "tikiEarn": 7,
+    "imageUrl": "",
+    "calories": 243
+  },
+  {
+    "id": "m23",
+    "name": "Especial Temporada — Nutella",
+    "description": "Granola, banana, fresas, Nutella, mantequilla de maní, rayadura de coco",
+    "category": "temporada",
+    "subCategory": "temporada",
+    "priceUSD": 6.5,
+    "tikiEarn": 6,
+    "imageUrl": "",
+    "calories": 314
+  }
+]

@@ -1,0 +1,26 @@
+[
+  {
+    "id": "r1",
+    "name": "Bebida Gratis",
+    "description": "Canjea tus tikis por una bebida seleccionada del menú.",
+    "tikiCost": 50,
+    "isActive": true,
+    "expiresAt": "2026-12-31T23:59:59.000Z"
+  },
+  {
+    "id": "r2",
+    "name": "Descuento 20%",
+    "description": "Recibe un 20% de descuento en tu próxima compra.",
+    "tikiCost": 80,
+    "isActive": true,
+    "expiresAt": "2026-11-30T23:59:59.000Z"
+  },
+  {
+    "id": "r3",
+    "name": "Bowl Gratis",
+    "description": "Disfruta un bowl gratis al alcanzar el canje requerido.",
+    "tikiCost": 120,
+    "isActive": true,
+    "expiresAt": "2027-01-15T23:59:59.000Z"
+  }
+]

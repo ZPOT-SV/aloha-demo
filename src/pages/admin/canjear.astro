@@ -1,0 +1,15 @@
+---
+import RedeemCoupon from '../../components/admin/RedeemCoupon';
+import AdminLayout from '../../layouts/AdminLayout.astro';
+---
+
+<AdminLayout title="Canjear Cupón | Aloha Loyalty">
+  <div class="space-y-6">
+    <header>
+      <p class="text-sm font-semibold uppercase tracking-[0.24em] text-text-muted">Canje</p>
+      <h1 class="mt-2 text-4xl font-black text-slate-950">Validá transacciones y cupones</h1>
+    </header>
+
+    <RedeemCoupon client:load />
+  </div>
+</AdminLayout>
