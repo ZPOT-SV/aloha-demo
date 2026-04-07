@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react';
 
 import { useStore } from '@nanostores/react';
 
-import { cart, cartOpen, selectedStore, setCartOpen, userSession } from '../../stores';
+import { cartOpen, selectedStore, setCartOpen, userSession } from '../../stores';
 import type { User } from '../../types';
 import AuthModal from '../AuthModal';
 import AuthPromptModal from '../auth/AuthPromptModal';
@@ -26,7 +26,6 @@ interface SuccessData {
 
 export default function CartFlow() {
   const isCartOpen = useStore(cartOpen);
-  const cartItems = useStore(cart);
   const activeStore = useStore(selectedStore);
   const currentUser = useStore(userSession);
   const [state, setState] = useState<CartFlowState>('idle');
@@ -55,12 +54,6 @@ export default function CartFlow() {
     setState((current) => (current === 'cart-open' ? 'idle' : current));
   }, [isCartOpen]);
 
-  useEffect(() => {
-    if (cartItems.length === 0 && state === 'cart-open') {
-      setCartOpen(false);
-    }
-  }, [cartItems.length, state]);
-
   return (
     <>
       <CartDrawer
@@ -70,6 +63,13 @@ export default function CartFlow() {
           setState('idle');
         }}
         onProceed={() => {
+          if (!currentUser) {
+            setCartOpen(false);
+            setState('idle');
+            setAuthPromptOpen(true);
+            return;
+          }
+
           setState('store-selection');
         }}
       />

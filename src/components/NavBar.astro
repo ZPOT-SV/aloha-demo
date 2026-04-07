@@ -68,7 +68,7 @@ import NavSearch from './NavSearch';
 
         <!-- Login button -->
         <button id="login-button" type="button"
-          class="hidden items-center gap-1.5 whitespace-nowrap rounded-full bg-accent px-3 py-2 text-sm font-bold text-white shadow-lg shadow-accent/30 transition hover:brightness-110 hover:scale-105 md:inline-flex md:px-4">
+          class="hidden items-center gap-1.5 whitespace-nowrap rounded-full bg-accent px-3 py-2 text-sm font-bold text-white shadow-lg shadow-accent/30 transition hover:brightness-110 hover:scale-105 md:px-4">
           <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M15 3h4a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2h-4"/><polyline points="10 17 15 12 10 7"/><line x1="15" y1="12" x2="3" y2="12"/></svg>
           <span class="hidden sm:inline">Iniciar Sesión</span>
         </button>
@@ -103,17 +103,22 @@ import NavSearch from './NavSearch';
     <!-- ── END BAR ROW ──────────────────────────────────────────────── -->
 
     <!-- ── LOGO: absolute, centered on mobile / left-hanging on desktop ── -->
-    <a href="/" class="nav-logo absolute z-50 shrink-0">
-      <img src="/logo.png" alt="Aloha Loyalty"
-           class="h-24 w-auto object-contain drop-shadow-xl md:h-40" />
-    </a>
+    <div class="nav-logo absolute z-50 shrink-0">
+      <a href="/" class="flex items-center">
+        <img
+          src="/logo.png"
+          alt="Aloha Loyalty"
+          class="h-10 w-auto object-contain"
+        />
+      </a>
+    </div>
 
 
   </div>
 
   <!-- Mobile nav drawer -->
   <nav id="mobile-nav"
-       class="absolute inset-x-0 overflow-hidden transition-all duration-300 ease-in-out md:hidden"
+       class="absolute inset-x-0 overflow-x-hidden overflow-y-auto overscroll-contain transition-all duration-300 ease-in-out md:hidden"
        style="top:100%;max-height:0;opacity:0;background:#F6C445;box-shadow:0 8px 24px rgba(0,0,0,0.12);z-index:50"
        aria-hidden="true">
     <div class="flex flex-col gap-1 border-t border-black/10 px-4 py-3">
@@ -184,6 +189,11 @@ import NavSearch from './NavSearch';
     transform: translateX(-50%) scale(1.04);
     opacity: 0.85;
   }
+  .nav-logo img {
+    height: 6rem;
+    width: auto;
+    filter: drop-shadow(0 20px 25px rgb(15 23 42 / 0.18));
+  }
   /* Desktop: logo anchored left, hanging below bar */
   @media (min-width: 768px) {
     .nav-logo {
@@ -193,6 +203,9 @@ import NavSearch from './NavSearch';
     }
     .nav-logo:hover {
       transform: scale(1.04);
+    }
+    .nav-logo img {
+      height: 10rem;
     }
   }
 
@@ -275,46 +288,36 @@ import NavSearch from './NavSearch';
   import { cart, setCartOpen } from '../stores';
   import type { CartItem } from '../types';
 
-  const cartButton = document.getElementById('cart-button');
-  const cartCount = document.getElementById('cart-count');
-  const sessionKey = 'aloha_session';
-
   const syncCartCount = (items: readonly CartItem[]) => {
-    const hasSession = Boolean(window.localStorage.getItem(sessionKey));
+    const cartCount = document.getElementById('cart-count');
+    const drawerCount = document.getElementById('drawer-cart-count');
     const total = items.reduce((sum, entry) => sum + entry.quantity, 0);
 
     if (cartCount) {
       cartCount.textContent = String(total);
-      cartCount.classList.toggle('hidden', total === 0 || !hasSession);
+      cartCount.classList.toggle('hidden', total === 0);
     }
 
-    const drawerCount = document.getElementById('drawer-cart-count');
     if (drawerCount) {
       drawerCount.textContent = String(total);
-      drawerCount.classList.toggle('hidden', total === 0 || !hasSession);
+      drawerCount.classList.toggle('hidden', total === 0);
     }
   };
 
-  cart.subscribe((items) => {
-    syncCartCount(items);
-  });
+  const handleCartTriggerClick = (event: Event): void => {
+    const target = event.target;
+
+    if (!(target instanceof Element) || !target.closest('#cart-button, #drawer-cart-btn')) {
+      return;
+    }
+
+    setCartOpen(true);
+  };
+
+  cart.subscribe(syncCartCount);
+  document.addEventListener('click', handleCartTriggerClick);
+  document.addEventListener('astro:page-load', () => syncCartCount(cart.get()));
   syncCartCount(cart.get());
-
-  cartButton?.addEventListener('click', () => {
-    if (!window.localStorage.getItem(sessionKey)) {
-      window.location.href = '/?auth=required';
-      return;
-    }
-    setCartOpen(true);
-  });
-
-  document.getElementById('drawer-cart-btn')?.addEventListener('click', () => {
-    if (!window.localStorage.getItem(sessionKey)) {
-      window.location.href = '/?auth=required';
-      return;
-    }
-    setCartOpen(true);
-  });
 </script>
 
 <script>
@@ -323,14 +326,6 @@ import NavSearch from './NavSearch';
 
   const sessionKey = 'aloha_session';
   const tikiKey = 'aloha_tikis';
-
-  const cartCount = document.getElementById('cart-count');
-  const loginButton = document.getElementById('login-button');
-  const userActions = document.getElementById('user-actions');
-  const userTikis = document.getElementById('user-tikis');
-  const userTierEmoji = document.getElementById('user-tier-emoji');
-  const userName = document.getElementById('user-name');
-  const logoutButton = document.getElementById('logout-button');
 
   const tierEmojiMap: Record<string, string> = {
     rise: '🌺 Rise',
@@ -348,6 +343,11 @@ import NavSearch from './NavSearch';
 
   const syncNavbar = () => {
     const rawSession = window.localStorage.getItem(sessionKey);
+    const loginButton = document.getElementById('login-button');
+    const userActions = document.getElementById('user-actions');
+    const userTikis = document.getElementById('user-tikis');
+    const userTierEmoji = document.getElementById('user-tier-emoji');
+    const userName = document.getElementById('user-name');
     const drawerLogin = document.getElementById('drawer-login-section');
     const drawerUser = document.getElementById('drawer-user-section');
     const drawerUserName = document.getElementById('drawer-user-name');
@@ -356,8 +356,9 @@ import NavSearch from './NavSearch';
 
     if (!rawSession) {
       loginButton?.classList.remove('hidden');
+      loginButton?.classList.add('inline-flex');
       userActions?.classList.add('hidden');
-      cartCount?.classList.add('hidden');
+      userActions?.classList.remove('flex');
       drawerLogin?.classList.remove('hidden');
       drawerUser?.classList.add('hidden');
       drawerUser?.classList.remove('flex');
@@ -381,6 +382,7 @@ import NavSearch from './NavSearch';
       }
 
       loginButton?.classList.add('hidden');
+      loginButton?.classList.remove('inline-flex');
       userActions?.classList.remove('hidden');
       userActions?.classList.add('flex');
 
@@ -393,36 +395,33 @@ import NavSearch from './NavSearch';
       drawerUser?.classList.add('flex');
     } catch {
       logoutUser();
-      loginButton?.classList.remove('hidden');
-      userActions?.classList.add('hidden');
-      cartCount?.classList.add('hidden');
-      document.getElementById('drawer-login-section')?.classList.remove('hidden');
-      const du = document.getElementById('drawer-user-section');
-      du?.classList.add('hidden');
-      du?.classList.remove('flex');
+      syncNavbar();
+      return;
     }
   };
 
-  loginButton?.addEventListener('click', () => {
-    window.dispatchEvent(new CustomEvent('aloha:open-auth'));
-  });
+  const handleNavbarAuthClick = (event: Event): void => {
+    const target = event.target;
 
-  document.getElementById('drawer-login-btn')?.addEventListener('click', () => {
-    window.dispatchEvent(new CustomEvent('aloha:open-auth'));
-  });
+    if (!(target instanceof Element)) {
+      return;
+    }
 
-  logoutButton?.addEventListener('click', () => {
-    logoutUser();
-    window.location.href = '/';
-  });
+    if (target.closest('#login-button, #drawer-login-btn')) {
+      window.dispatchEvent(new CustomEvent('aloha:open-auth'));
+      return;
+    }
 
-  document.getElementById('drawer-logout-btn')?.addEventListener('click', () => {
-    logoutUser();
-    window.location.href = '/';
-  });
+    if (target.closest('#logout-button, #drawer-logout-btn')) {
+      logoutUser();
+      window.location.href = '/';
+    }
+  };
 
+  document.addEventListener('click', handleNavbarAuthClick);
   window.addEventListener('storage', syncNavbar);
   window.addEventListener('aloha:auth-changed', syncNavbar);
+  document.addEventListener('astro:page-load', syncNavbar);
   syncNavbar();
 </script>
 
@@ -437,23 +436,30 @@ import NavSearch from './NavSearch';
 </script>
 
 <script>
-  // Hamburger + mobile search toggle
-  const hamburgerBtn = document.getElementById('hamburger-btn');
-  const mobileNav = document.getElementById('mobile-nav');
-  const hamIcon = document.getElementById('ham-icon');
-  const closeIcon = document.getElementById('close-icon');
   let navOpen = false;
 
+  const getMobileNavElements = () => {
+    return {
+      hamburgerBtn: document.getElementById('hamburger-btn'),
+      mobileNav: document.getElementById('mobile-nav'),
+      hamIcon: document.getElementById('ham-icon'),
+      closeIcon: document.getElementById('close-icon')
+    };
+  };
+
   function openMobileNav() {
+    const { hamburgerBtn, mobileNav, hamIcon, closeIcon } = getMobileNavElements();
+    const availableHeight = Math.max(window.innerHeight - 52, 240);
     navOpen = true;
     hamburgerBtn?.setAttribute('aria-expanded', 'true');
     mobileNav?.setAttribute('aria-hidden', 'false');
-    if (mobileNav) { mobileNav.style.maxHeight = '400px'; mobileNav.style.opacity = '1'; }
+    if (mobileNav) { mobileNav.style.maxHeight = `${availableHeight}px`; mobileNav.style.opacity = '1'; }
     hamIcon?.classList.add('hidden');
     closeIcon?.classList.remove('hidden');
   }
 
   function closeMobileNav() {
+    const { hamburgerBtn, mobileNav, hamIcon, closeIcon } = getMobileNavElements();
     navOpen = false;
     hamburgerBtn?.setAttribute('aria-expanded', 'false');
     mobileNav?.setAttribute('aria-hidden', 'true');
@@ -462,23 +468,28 @@ import NavSearch from './NavSearch';
     closeIcon?.classList.add('hidden');
   }
 
-  hamburgerBtn?.addEventListener('click', () => {
-    navOpen ? closeMobileNav() : openMobileNav();
-  });
+  const handleMobileNavClick = (event: Event): void => {
+    const target = event.target;
 
-  // Close drawer when any mobile nav link (including Carrito) is clicked
-  document.querySelectorAll<HTMLElement>('.mobile-nav-link, #drawer-cart-btn').forEach((el) => {
-    el.addEventListener('click', closeMobileNav);
-  });
+    if (!(target instanceof Element)) {
+      return;
+    }
+
+    if (target.closest('#hamburger-btn')) {
+      navOpen ? closeMobileNav() : openMobileNav();
+      return;
+    }
+
+    if (target.closest('.mobile-nav-link, #drawer-cart-btn')) {
+      closeMobileNav();
+    }
+  };
+
+  document.addEventListener('click', handleMobileNavClick);
 
   // Close drawer on View Transition navigation (astro:before-preparation fires before page swap)
   document.addEventListener('astro:before-preparation', closeMobileNav);
   // Also reset icon state after each page load in case of back/forward
-  document.addEventListener('astro:page-load', () => {
-    navOpen = false;
-    if (mobileNav) { mobileNav.style.maxHeight = '0'; mobileNav.style.opacity = '0'; }
-    hamIcon?.classList.remove('hidden');
-    closeIcon?.classList.add('hidden');
-  });
+  document.addEventListener('astro:page-load', closeMobileNav);
 
 </script>

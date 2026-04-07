@@ -1,5 +1,4 @@
 ---
-import AuthModal from '../components/AuthModal';
 import ProductCarousel from '../components/ProductCarousel';
 import Layout from '../layouts/Layout.astro';
 
@@ -169,17 +168,8 @@ const tiers = [
       </div>
     </div>
   </section>
-
-  <AuthModal client:load />
-
   <script>
     import { tikiBalance, userSession } from '../stores';
-
-    const heroButton = document.getElementById('hero-open-auth');
-    const heroTiki = document.getElementById('hero-tiki');
-    const heroWidget = document.getElementById('hero-widget');
-    const heroBalanceValue = document.getElementById('hero-balance-value');
-    const heroTierName = document.getElementById('hero-tier-name');
 
     const getTierName = (tikis: number): string => {
       if (tikis >= 150) return 'Aloha 🏄';
@@ -188,6 +178,11 @@ const tiers = [
     };
 
     const syncHero = (): void => {
+      const heroButton = document.getElementById('hero-open-auth');
+      const heroTiki = document.getElementById('hero-tiki');
+      const heroWidget = document.getElementById('hero-widget');
+      const heroBalanceValue = document.getElementById('hero-balance-value');
+      const heroTierName = document.getElementById('hero-tier-name');
       const session = userSession.get();
       const loggedIn = session?.role === 'customer';
 
@@ -202,26 +197,56 @@ const tiers = [
       }
     };
 
+    const handleHeroAuthClick = (event: Event): void => {
+      const target = event.target;
+
+      if (!(target instanceof Element) || !target.closest('#hero-open-auth')) {
+        return;
+      }
+
+      window.dispatchEvent(new CustomEvent('aloha:open-auth'));
+    };
+
     userSession.subscribe(syncHero);
     tikiBalance.subscribe(syncHero);
+    document.addEventListener('click', handleHeroAuthClick);
+    document.addEventListener('astro:page-load', syncHero);
     syncHero();
-    heroButton?.addEventListener('click', () => window.dispatchEvent(new CustomEvent('aloha:open-auth')));
   </script>
 
   <script>
-    // Scroll-triggered fade-in
-    const observer = new IntersectionObserver(
-      (entries) => {
-        for (const entry of entries) {
-          if (entry.isIntersecting) {
-            entry.target.classList.add('visible');
-            observer.unobserve(entry.target);
+    let landingObserver: IntersectionObserver | null = null;
+
+    const setupLandingAnimations = (): void => {
+      const targets = Array.from(document.querySelectorAll<HTMLElement>('[data-animate]'));
+
+      landingObserver?.disconnect();
+
+      if (targets.length === 0) {
+        return;
+      }
+
+      if (!('IntersectionObserver' in window)) {
+        targets.forEach((target) => target.classList.add('visible'));
+        return;
+      }
+
+      landingObserver = new IntersectionObserver(
+        (entries, observer) => {
+          for (const entry of entries) {
+            if (entry.isIntersecting) {
+              entry.target.classList.add('visible');
+              observer.unobserve(entry.target);
+            }
           }
-        }
-      },
-      { threshold: 0.1, rootMargin: '0px 0px -40px 0px' }
-    );
-    document.querySelectorAll('[data-animate]').forEach((el) => observer.observe(el));
+        },
+        { threshold: 0.1, rootMargin: '0px 0px -40px 0px' }
+      );
+
+      targets.forEach((target) => landingObserver?.observe(target));
+    };
+
+    setupLandingAnimations();
+    document.addEventListener('astro:page-load', setupLandingAnimations);
   </script>
 </Layout>
-
