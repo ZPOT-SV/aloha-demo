@@ -46,7 +46,7 @@ const tiers = [
           <button
             id="hero-open-auth"
             type="button"
-            class="rounded-full bg-cta px-7 py-3.5 text-base font-bold text-white shadow-xl shadow-cta/30 transition hover:bg-deep-cta"
+            class="hidden rounded-full bg-cta px-7 py-3.5 text-base font-bold text-white shadow-xl shadow-cta/30 transition hover:bg-deep-cta"
           >
             Empezá Ahora
           </button>
@@ -61,8 +61,13 @@ const tiers = [
 
       <div class="grid gap-4 rounded-[2rem] border border-brand/10 bg-white/80 p-6 shadow-2xl shadow-brand/10 backdrop-blur-sm">
         <div class="rounded-[1.5rem] bg-brand p-6 text-white">
-          <p class="text-sm font-semibold uppercase tracking-[0.28em] text-white/80">Saldo de ejemplo</p>
-          <p class="mt-4 text-5xl font-black">142</p>
+          <p
+            id="hero-balance-label"
+            class="text-sm font-semibold uppercase tracking-[0.28em] text-white/80"
+          >
+            Saldo de ejemplo
+          </p>
+          <p id="hero-balance-value" class="mt-4 text-5xl font-black">142</p>
           <p class="mt-2 text-lg font-semibold">Tikis listos para canjear</p>
         </div>
         <div class="grid gap-4 md:grid-cols-3 lg:grid-cols-1">
@@ -123,8 +128,47 @@ const tiers = [
 
   <AuthModal client:load />
 
-  <script is:inline>
+  <script>
+    import { tikiBalance, userSession } from '../stores';
+
     const heroButton = document.getElementById('hero-open-auth');
+    const heroBalanceLabel = document.getElementById('hero-balance-label');
+    const heroBalanceValue = document.getElementById('hero-balance-value');
+    const exampleBalanceLabel = 'Saldo de ejemplo';
+    const liveBalanceLabel = 'Saldo';
+    const exampleBalanceValue = '142';
+
+    const syncHeroButtonVisibility = (): void => {
+      const session = userSession.get();
+      heroButton?.classList.toggle('hidden', session !== null);
+    };
+
+    const syncHeroBalance = (): void => {
+      const session = userSession.get();
+      const showLiveBalance = session?.role === 'customer';
+
+      if (heroBalanceLabel) {
+        heroBalanceLabel.textContent = showLiveBalance ? liveBalanceLabel : exampleBalanceLabel;
+      }
+
+      if (heroBalanceValue) {
+        heroBalanceValue.textContent = showLiveBalance
+          ? String(tikiBalance.get())
+          : exampleBalanceValue;
+      }
+    };
+
+    userSession.subscribe(() => {
+      syncHeroButtonVisibility();
+      syncHeroBalance();
+    });
+
+    tikiBalance.subscribe(() => {
+      syncHeroBalance();
+    });
+
+    syncHeroButtonVisibility();
+    syncHeroBalance();
 
     heroButton?.addEventListener('click', () => {
       window.dispatchEvent(new CustomEvent('aloha:open-auth'));

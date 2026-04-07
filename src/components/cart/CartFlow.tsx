@@ -4,6 +4,8 @@ import { useStore } from '@nanostores/react';
 
 import { cart, cartOpen, selectedStore, setCartOpen, userSession } from '../../stores';
 import type { User } from '../../types';
+import AuthModal from '../AuthModal';
+import AuthPromptModal from '../auth/AuthPromptModal';
 import CartDrawer from './CartDrawer';
 import PaymentModal from './PaymentModal';
 import StoreSelectionModal from './StoreSelectionModal';
@@ -29,6 +31,20 @@ export default function CartFlow() {
   const currentUser = useStore(userSession);
   const [state, setState] = useState<CartFlowState>('idle');
   const [successData, setSuccessData] = useState<SuccessData | null>(null);
+  const [authPromptOpen, setAuthPromptOpen] = useState(false);
+  const [authTab, setAuthTab] = useState<'login' | 'register'>('login');
+
+  useEffect(() => {
+    const openAuthPrompt = () => {
+      setAuthPromptOpen(true);
+    };
+
+    window.addEventListener('aloha:open-auth-prompt', openAuthPrompt);
+
+    return () => {
+      window.removeEventListener('aloha:open-auth-prompt', openAuthPrompt);
+    };
+  }, []);
 
   useEffect(() => {
     if (isCartOpen) {
@@ -101,6 +117,24 @@ export default function CartFlow() {
         tierUpMessage={successData?.tierUpMessage ?? null}
         transactionId={successData?.transactionId ?? ''}
       />
+
+      <AuthPromptModal
+        isOpen={authPromptOpen}
+        onClose={() => {
+          setAuthPromptOpen(false);
+        }}
+        onLoginClick={() => {
+          setAuthPromptOpen(false);
+          setAuthTab('login');
+          window.dispatchEvent(new CustomEvent('aloha:open-auth', { detail: { defaultTab: 'login' } }));
+        }}
+        onRegisterClick={() => {
+          setAuthPromptOpen(false);
+          setAuthTab('register');
+          window.dispatchEvent(new CustomEvent('aloha:open-auth', { detail: { defaultTab: 'register' } }));
+        }}
+      />
+      <AuthModal defaultTab={authTab} />
     </>
   );
 }

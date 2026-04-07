@@ -1,6 +1,8 @@
 import { useState } from 'react';
 
-import { addToCart } from '../stores';
+import { useStore } from '@nanostores/react';
+
+import { addToCart, userSession } from '../stores';
 import type { MenuItem, MenuSubCategory } from '../types';
 
 interface MenuItemCardProps {
@@ -17,6 +19,7 @@ const categoryIcons: Record<MenuSubCategory, string> = {
 };
 
 export default function MenuItemCard({ item }: MenuItemCardProps) {
+  const session = useStore(userSession);
   const [selectedSize, setSelectedSize] = useState<'12oz' | '16oz'>('12oz');
   const [added, setAdded] = useState(false);
   const displayPrice = item.sizesUSD ? item.sizesUSD[selectedSize] : item.priceUSD;
@@ -73,6 +76,11 @@ export default function MenuItemCard({ item }: MenuItemCardProps) {
         <button
           className="rounded-full bg-cta px-4 py-2 text-sm font-bold text-white shadow-lg shadow-cta/20 transition hover:bg-deep-cta"
           onClick={() => {
+            if (!session) {
+              window.dispatchEvent(new CustomEvent('aloha:open-auth-prompt'));
+              return;
+            }
+
             addToCart(purchaseItem);
             setAdded(true);
             window.setTimeout(() => {

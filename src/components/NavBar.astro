@@ -68,8 +68,10 @@
 
   const cartButton = document.getElementById('cart-button');
   const cartCount = document.getElementById('cart-count');
+  const sessionKey = 'aloha_session';
 
   const syncCartCount = (items: readonly CartItem[]) => {
+    const hasSession = Boolean(window.localStorage.getItem(sessionKey));
     const total = items.reduce((sum, entry) => sum + entry.quantity, 0);
 
     if (!cartCount) {
@@ -77,7 +79,7 @@
     }
 
     cartCount.textContent = String(total);
-    cartCount.classList.toggle('hidden', total === 0);
+    cartCount.classList.toggle('hidden', total === 0 || !hasSession);
   };
 
   cart.subscribe((items) => {
@@ -86,14 +88,23 @@
   syncCartCount(cart.get());
 
   cartButton?.addEventListener('click', () => {
+    if (!window.localStorage.getItem(sessionKey)) {
+      window.location.href = '/?auth=required';
+      return;
+    }
+
     setCartOpen(true);
   });
 </script>
 
-<script is:inline>
+<script>
+  import { logoutUser } from '../stores';
+  import type { User } from '../types';
+
   const sessionKey = 'aloha_session';
   const tikiKey = 'aloha_tikis';
 
+  const cartCount = document.getElementById('cart-count');
   const loginButton = document.getElementById('login-button');
   const userActions = document.getElementById('user-actions');
   const userTikis = document.getElementById('user-tikis');
@@ -101,17 +112,13 @@
   const userName = document.getElementById('user-name');
   const logoutButton = document.getElementById('logout-button');
 
-  const tierEmojiMap = {
+  const tierEmojiMap: Record<string, string> = {
     rise: '🌺 Rise',
     vibe: '🌊 Vibe',
     aloha: '🏄 Aloha'
   };
 
-  const emitAuthChange = () => {
-    window.dispatchEvent(new CustomEvent('aloha:auth-changed'));
-  };
-
-  const getTierEmoji = (tierId) => {
+  const getTierEmoji = (tierId: User['tierId']): string => {
     if (!tierId) {
       return '👑';
     }
@@ -125,11 +132,12 @@
     if (!rawSession) {
       loginButton?.classList.remove('hidden');
       userActions?.classList.add('hidden');
+      cartCount?.classList.add('hidden');
       return;
     }
 
     try {
-      const session = JSON.parse(rawSession);
+      const session = JSON.parse(rawSession) as User;
       const storedTikis = Number(window.localStorage.getItem(tikiKey) ?? session.tikiBalance ?? 0);
 
       if (userTikis) {
@@ -148,10 +156,10 @@
       userActions?.classList.remove('hidden');
       userActions?.classList.add('flex');
     } catch {
-      window.localStorage.removeItem(sessionKey);
-      window.localStorage.removeItem(tikiKey);
+      logoutUser();
       loginButton?.classList.remove('hidden');
       userActions?.classList.add('hidden');
+      cartCount?.classList.add('hidden');
     }
   };
 
@@ -160,9 +168,7 @@
   });
 
   logoutButton?.addEventListener('click', () => {
-    window.localStorage.removeItem(sessionKey);
-    window.localStorage.removeItem(tikiKey);
-    emitAuthChange();
+    logoutUser();
     window.location.href = '/';
   });
 

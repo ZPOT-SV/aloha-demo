@@ -93,12 +93,13 @@ const navItems = [
       </main>
     </div>
 
-    <script is:inline>
+    <script>
+      import { logoutUser } from '../stores';
+
       const logoutButton = document.getElementById('admin-logout');
 
       logoutButton?.addEventListener('click', () => {
-        window.localStorage.removeItem('aloha_session');
-        window.localStorage.removeItem('aloha_tikis');
+        logoutUser();
         window.location.href = '/';
       });
     </script>

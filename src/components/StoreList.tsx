@@ -3,13 +3,14 @@ import { useMemo, useState } from 'react';
 import { useStore } from '@nanostores/react';
 
 import storesData from '../data/stores.json';
-import { selectedStore, setSelectedStore } from '../stores';
+import { selectedStore, setSelectedStore, userSession } from '../stores';
 import type { StoreLocation } from '../types';
 
 const stores = storesData as StoreLocation[];
 
 export default function StoreList() {
   const activeStore = useStore(selectedStore);
+  const session = useStore(userSession);
   const [query, setQuery] = useState('');
 
   const filteredStores = useMemo(() => {
@@ -69,17 +70,23 @@ export default function StoreList() {
                   <p>Domingo: {store.hours.domingo ?? 'Cerrado'}</p>
                 </div>
 
-                <button
-                  className={`mt-4 inline-flex items-center gap-2 rounded-full px-4 py-2 text-sm font-bold transition ${
-                    isSelected
-                      ? 'bg-cta text-white shadow-lg shadow-cta/20'
-                      : 'border border-brand text-brand hover:bg-brand hover:text-white'
-                  }`}
-                  onClick={() => setSelectedStore(store)}
-                  type="button"
-                >
-                  {isSelected ? '✓ Seleccionada' : 'Seleccionar esta tienda'}
-                </button>
+                {session ? (
+                  <button
+                    className={`mt-4 inline-flex items-center gap-2 rounded-full px-4 py-2 text-sm font-bold transition ${
+                      isSelected
+                        ? 'bg-cta text-white shadow-lg shadow-cta/20'
+                        : 'border border-brand text-brand hover:bg-brand hover:text-white'
+                    }`}
+                    onClick={() => setSelectedStore(store)}
+                    type="button"
+                  >
+                    {isSelected ? '✓ Seleccionada' : 'Seleccionar esta tienda'}
+                  </button>
+                ) : (
+                  <p className="mt-4 text-sm font-medium text-text-muted">
+                    Iniciá sesión para seleccionar
+                  </p>
+                )}
               </article>
             );
           })

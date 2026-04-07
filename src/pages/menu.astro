@@ -4,7 +4,7 @@ import CartFlow from '../components/cart/CartFlow';
 import Layout from '../layouts/Layout.astro';
 ---
 
-<Layout title="Menú — Aloha Loyalty" requiresAuth={true}>
+<Layout title="Menú — Aloha Loyalty" requiresAuth={false}>
   <MenuPage client:load />
   <CartFlow client:load />
 </Layout>

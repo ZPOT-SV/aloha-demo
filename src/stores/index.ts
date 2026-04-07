@@ -15,6 +15,10 @@ import type {
 } from '../types';
 
 const isBrowser = typeof window !== 'undefined';
+const sessionStorageKey = 'aloha_session';
+const cartStorageKey = 'aloha_cart';
+const tikiStorageKey = 'aloha_tikis';
+const authChangedEvent = 'aloha:auth-changed';
 
 const fallbackChallenges = challengesData as Challenge[];
 const fallbackGiftCards = giftCardsData as GiftCard[];
@@ -49,16 +53,16 @@ function persistStore<T>(key: string, store: ReturnType<typeof atom<T>>): void {
 }
 
 export const userSession = atom<User | null>(
-  readFromStorage<User | null>('aloha_session', null)
+  readFromStorage<User | null>(sessionStorageKey, null)
 );
 
 export function setUserSession(value: User | null): void {
   userSession.set(value);
 }
 
-persistStore('aloha_session', userSession);
+persistStore(sessionStorageKey, userSession);
 
-export const cart = atom<CartItem[]>(readFromStorage<CartItem[]>('aloha_cart', []));
+export const cart = atom<CartItem[]>(readFromStorage<CartItem[]>(cartStorageKey, []));
 
 export function setCart(value: CartItem[]): void {
   cart.set(value);
@@ -103,7 +107,7 @@ export function clearCart(): void {
   cart.set([]);
 }
 
-persistStore('aloha_cart', cart);
+persistStore(cartStorageKey, cart);
 
 export const cartOpen = atom<boolean>(false);
 
@@ -111,13 +115,29 @@ export function setCartOpen(value: boolean): void {
   cartOpen.set(value);
 }
 
-export const tikiBalance = atom<number>(readFromStorage<number>('aloha_tikis', 0));
+export const tikiBalance = atom<number>(readFromStorage<number>(tikiStorageKey, 0));
 
 export function setTikiBalance(value: number): void {
   tikiBalance.set(value);
 }
 
-persistStore('aloha_tikis', tikiBalance);
+persistStore(tikiStorageKey, tikiBalance);
+
+export function logoutUser(): void {
+  clearCart();
+  setCartOpen(false);
+  setTikiBalance(0);
+  setUserSession(null);
+
+  if (!isBrowser) {
+    return;
+  }
+
+  window.localStorage.removeItem(cartStorageKey);
+  window.localStorage.removeItem(sessionStorageKey);
+  window.localStorage.removeItem(tikiStorageKey);
+  window.dispatchEvent(new CustomEvent(authChangedEvent));
+}
 
 export const transactionHistory = atom<Transaction[]>(
   readFromStorage<Transaction[]>('aloha_transactions', [])

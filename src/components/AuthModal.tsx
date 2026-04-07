@@ -23,6 +23,10 @@ interface RegisterState {
   confirmPassword: string;
 }
 
+interface AuthModalProps {
+  defaultTab?: 'login' | 'register';
+}
+
 const knownUsers = usersData as User[];
 
 const sessionKey = 'aloha_session';
@@ -63,9 +67,9 @@ function redirectForUser(user: User): void {
   window.location.href = user.role === 'admin' ? '/admin' : '/dashboard';
 }
 
-export default function AuthModal() {
+export default function AuthModal({ defaultTab = 'login' }: AuthModalProps) {
   const [isOpen, setIsOpen] = useState(false);
-  const [activeTab, setActiveTab] = useState<Tab>('login');
+  const [activeTab, setActiveTab] = useState<Tab>(defaultTab);
   const [showLoginPassword, setShowLoginPassword] = useState(false);
   const [showRegisterPassword, setShowRegisterPassword] = useState(false);
   const [showRegisterConfirmPassword, setShowRegisterConfirmPassword] = useState(false);
@@ -79,7 +83,10 @@ export default function AuthModal() {
   });
 
   useEffect(() => {
-    const openModal = () => {
+    const openModal = (event?: Event) => {
+      const requestedTab = (event as CustomEvent<{ defaultTab?: Tab }> | undefined)?.detail?.defaultTab;
+
+      setActiveTab(requestedTab ?? defaultTab);
       setErrorMessage('');
       setIsOpen(true);
     };
@@ -98,6 +105,10 @@ export default function AuthModal() {
       window.removeEventListener('keydown', onKeyDown);
     };
   }, []);
+
+  useEffect(() => {
+    setActiveTab(defaultTab);
+  }, [defaultTab]);
 
   const closeModal = () => {
     setIsOpen(false);
