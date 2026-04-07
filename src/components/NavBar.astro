@@ -1,14 +1,14 @@
 <header class="sticky top-0 z-40 border-b border-brand/10 bg-white/80 backdrop-blur-xl">
-  <div class="mx-auto flex max-w-6xl items-center justify-between gap-4 px-6 py-4">
-    <a href="/" class="flex items-center gap-3 text-brand">
+  <div class="mx-auto flex max-w-6xl flex-wrap items-start justify-between gap-3 px-4 py-3 sm:gap-4 sm:px-6 sm:py-4">
+    <a href="/" class="flex min-w-0 flex-1 items-center gap-3 text-brand sm:flex-none">
       <img
         src="/logo.png"
         alt="Aloha Loyalty"
-        class="h-12 w-auto object-contain"
+        class="h-10 w-auto object-contain sm:h-12"
       />
-      <div>
-        <p class="text-xs font-semibold uppercase tracking-[0.32em] text-text-muted">Aloha Loyalty</p>
-        <p class="text-lg font-black">El sabor que premia</p>
+      <div class="min-w-0">
+        <p class="text-[10px] font-semibold uppercase tracking-[0.24em] text-text-muted sm:text-xs sm:tracking-[0.32em]">Aloha Loyalty</p>
+        <p class="text-base font-black leading-tight sm:text-lg">El sabor que premia</p>
       </div>
     </a>
 
@@ -19,11 +19,11 @@
       <a class="transition hover:text-brand" href="/retos">Retos</a>
     </nav>
 
-    <div class="flex items-center gap-3">
+    <div class="flex w-full flex-wrap items-center justify-between gap-2 sm:w-auto sm:justify-end sm:gap-3">
       <button
         id="cart-button"
         type="button"
-        class="relative rounded-full border border-brand/15 bg-white px-4 py-2 text-lg text-brand shadow-sm transition hover:bg-brand/5"
+        class="relative shrink-0 rounded-full border border-brand/15 bg-white px-3 py-2 text-base text-brand shadow-sm transition hover:bg-brand/5 sm:px-4 sm:text-lg"
       >
         🛒
         <span
@@ -36,24 +36,24 @@
       <button
         id="login-button"
         type="button"
-        class="rounded-full bg-cta px-5 py-2.5 text-sm font-bold text-white shadow-lg shadow-cta/20 transition hover:bg-deep-cta"
+        class="ml-auto whitespace-nowrap rounded-full bg-cta px-4 py-2.5 text-sm font-bold text-white shadow-lg shadow-cta/20 transition hover:bg-deep-cta sm:ml-0 sm:px-5"
       >
         Iniciar Sesión
       </button>
 
-      <div id="user-actions" class="hidden items-center gap-3">
-        <div class="rounded-full bg-highlight px-4 py-2 text-sm font-bold text-slate-900 shadow-md shadow-highlight/30">
+      <div id="user-actions" class="hidden w-full flex-wrap items-center justify-end gap-2 sm:w-auto sm:flex-nowrap sm:gap-3">
+        <div class="shrink-0 rounded-full bg-highlight px-3 py-2 text-sm font-bold text-slate-900 shadow-md shadow-highlight/30 sm:px-4">
           <span id="user-tikis">0</span>
           <span>Tikis</span>
         </div>
-        <a href="/dashboard" class="flex items-center gap-2 cursor-pointer hover:opacity-80 transition-opacity rounded-full border border-brand/15 bg-white px-4 py-2 text-sm font-semibold text-slate-700 shadow-sm">
-          <span id="user-tier-emoji">🌺</span>
-          <span id="user-name">Invitado</span>
+        <a href="/dashboard" class="flex min-w-0 max-w-full cursor-pointer items-center gap-2 rounded-full border border-brand/15 bg-white px-4 py-2 text-sm font-semibold text-slate-700 shadow-sm transition-opacity hover:opacity-80 sm:max-w-none">
+          <span id="user-tier-emoji" class="shrink-0">🌺</span>
+          <span id="user-name" class="max-w-[7rem] truncate sm:max-w-none">Invitado</span>
         </a>
         <button
           id="logout-button"
           type="button"
-          class="text-sm font-semibold text-brand underline-offset-4 transition hover:underline"
+          class="whitespace-nowrap text-sm font-semibold text-brand underline-offset-4 transition hover:underline"
         >
           Salir
         </button>

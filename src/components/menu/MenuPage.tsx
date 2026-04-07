@@ -67,12 +67,12 @@ export default function MenuPage() {
   }, [activeCategory, activeSubCategory]);
 
   return (
-    <div className="mx-auto max-w-7xl px-6 py-8">
-      <nav className="mt-6 mb-4 flex flex-wrap gap-3" id="menu-category-tabs">
+    <div className="mx-auto max-w-7xl px-4 py-6 sm:px-6 sm:py-8">
+      <nav className="mb-4 mt-4 flex flex-wrap gap-2 sm:mt-6 sm:gap-3" id="menu-category-tabs">
         {parentTabs.map((tab) => (
           <button
             key={tab.id}
-            className={`rounded-full border border-brand px-4 py-2 text-sm font-bold transition hover:bg-brand hover:text-white ${
+            className={`rounded-full border border-brand px-3 py-2 text-sm font-bold transition hover:bg-brand hover:text-white sm:px-4 ${
               activeCategory === tab.id ? 'bg-brand text-white shadow-lg shadow-brand/15' : 'text-brand'
             }`}
             onClick={() => {
@@ -87,11 +87,11 @@ export default function MenuPage() {
       </nav>
 
       {currentSubCats.length > 0 ? (
-        <nav className="mt-6 mb-4 flex flex-wrap gap-3">
+        <nav className="mb-4 mt-4 flex flex-wrap gap-2 sm:mt-6 sm:gap-3">
           {currentSubCats.map((subCat) => (
             <button
               key={subCat}
-              className={`rounded-full border border-brand/20 px-4 py-2 text-sm font-bold transition hover:border-brand hover:text-brand ${
+              className={`rounded-full border border-brand/20 px-3 py-2 text-sm font-bold transition hover:border-brand hover:text-brand sm:px-4 ${
                 activeSubCategory === subCat ? 'bg-slate-950 text-white' : 'text-text-muted'
               }`}
               onClick={() => setActiveSubCategory(subCat)}
@@ -103,7 +103,7 @@ export default function MenuPage() {
         </nav>
       ) : null}
 
-      <div className="grid grid-cols-3 gap-6" id="menu-grid">
+      <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 sm:gap-6 lg:grid-cols-3" id="menu-grid">
         {filteredItems.map((item) => (
           <MenuItemCard key={item.id} item={item} />
         ))}

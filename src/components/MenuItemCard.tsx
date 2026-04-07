@@ -34,26 +34,26 @@ export default function MenuItemCard({ item }: MenuItemCardProps) {
     : item;
 
   return (
-    <article className="rounded-[1.75rem] border border-brand/10 bg-white p-5 shadow-xl shadow-brand/5">
-      <div className="flex h-44 items-center justify-center rounded-t-2xl bg-gradient-to-br from-brand to-cta">
+    <article className="overflow-hidden rounded-[1.75rem] border border-brand/10 bg-white p-4 shadow-xl shadow-brand/5 sm:p-5">
+      <div className="flex h-40 items-center justify-center rounded-t-2xl bg-gradient-to-br from-brand to-cta sm:h-44">
         <span className="text-5xl">{icon}</span>
       </div>
 
-      <div className="mt-5 flex items-center justify-between gap-3">
-        <span className="rounded-full bg-brand/10 px-3 py-1 text-xs font-bold uppercase tracking-[0.16em] text-brand">
+      <div className="mt-5 flex flex-wrap items-start gap-2 sm:items-center sm:justify-between sm:gap-3">
+        <span className="inline-flex rounded-full bg-brand/10 px-3 py-1 text-xs font-bold uppercase tracking-[0.16em] text-brand">
           {item.category}
         </span>
-        <span className="rounded-full bg-highlight px-3 py-1 text-sm font-bold text-slate-900">
+        <span className="inline-flex rounded-full bg-highlight px-3 py-1 text-sm font-bold text-slate-900">
           +{item.tikiEarn} Tikis
         </span>
       </div>
 
-      <h2 className="mt-4 text-2xl font-black text-slate-950">{item.name}</h2>
-      <p className="mt-3 min-h-12 text-sm leading-6 text-text-muted">{item.description}</p>
+      <h2 className="mt-4 text-xl font-black leading-tight text-slate-950 sm:text-2xl">{item.name}</h2>
+      <p className="mt-3 min-h-0 text-sm leading-6 text-text-muted sm:min-h-12">{item.description}</p>
       {item.calories ? <p className="mt-2 text-xs font-semibold uppercase tracking-[0.12em] text-text-muted">Cal {item.calories}</p> : null}
 
       {item.sizesUSD ? (
-        <div className="mt-4 flex gap-2">
+        <div className="mt-4 flex flex-wrap gap-2">
           {(['12oz', '16oz'] as const).map((size) => (
             <button
               key={size}
@@ -71,10 +71,10 @@ export default function MenuItemCard({ item }: MenuItemCardProps) {
         </div>
       ) : null}
 
-      <div className="mt-5 flex items-center justify-between gap-3">
+      <div className="mt-5 flex flex-col items-stretch gap-3 sm:flex-row sm:items-center sm:justify-between">
         <p className="text-lg font-black text-slate-950">${displayPrice.toFixed(2)} USD</p>
         <button
-          className="rounded-full bg-cta px-4 py-2 text-sm font-bold text-white shadow-lg shadow-cta/20 transition hover:bg-deep-cta"
+          className="w-full rounded-full bg-cta px-4 py-2.5 text-center text-sm font-bold text-white shadow-lg shadow-cta/20 transition hover:bg-deep-cta sm:w-auto"
           onClick={() => {
             if (!session) {
               window.dispatchEvent(new CustomEvent('aloha:open-auth-prompt'));
