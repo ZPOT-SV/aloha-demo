@@ -1,31 +1,31 @@
-import { useEffect, useMemo, useRef } from 'react';
+import { useEffect, useMemo, useRef } from "react";
 
-import { useStore } from '@nanostores/react';
+import { useStore } from "@nanostores/react";
 
-import storesData from '../data/stores.json';
-import { selectedStore, setSelectedStore } from '../stores';
-import type { StoreLocation } from '../types';
+import storesData from "../data/stores.json";
+import { selectedStore, setSelectedStore } from "../stores";
+import type { StoreLocation } from "../types";
 
 const stores = storesData as StoreLocation[];
 
 export default function StoreMap() {
   const activeStore = useStore(selectedStore);
-  const mapRef = useRef<import('leaflet').Map | null>(null);
+  const mapRef = useRef<import("leaflet").Map | null>(null);
 
   const fallbackStore = useMemo(() => {
     return activeStore ?? stores[0];
   }, [activeStore]);
 
   useEffect(() => {
-    if (!fallbackStore || typeof window === 'undefined') {
+    if (!fallbackStore || typeof window === "undefined") {
       return;
     }
 
     let isMounted = true;
 
     void (async () => {
-      const leafletModule = await import('leaflet');
-      await import('leaflet/dist/leaflet.css');
+      const leafletModule = await import("leaflet");
+      await import("leaflet/dist/leaflet.css");
 
       if (!isMounted) {
         return;
@@ -33,31 +33,33 @@ export default function StoreMap() {
 
       const L = leafletModule.default;
       const alohaPin = L.divIcon({
-        className: 'aloha-map-pin',
-        html: '<div style="display:grid;place-items:center;width:36px;height:36px;border-radius:9999px;background:#800080;color:#ffffff;font-weight:800;box-shadow:0 10px 25px rgba(128,0,128,0.35)">A</div>',
+        className: "aloha-map-pin",
+        html: '<div style="display:grid;place-items:center;width:36px;height:36px;border-radius:9999px;background:#4EC5D4;color:#ffffff;font-weight:800;box-shadow:0 10px 25px rgba(78,197,212,0.35)">A</div>',
         iconSize: [36, 36],
-        iconAnchor: [18, 18]
+        iconAnchor: [18, 18],
       });
 
-      const map = L.map('aloha-store-map', {
+      const map = L.map("aloha-store-map", {
         zoomControl: true,
-        scrollWheelZoom: false
+        scrollWheelZoom: false,
       }).setView([fallbackStore.lat, fallbackStore.lng], 13);
 
       mapRef.current = map;
 
-      L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-        attribution: '&copy; OpenStreetMap contributors'
+      L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
+        attribution: "&copy; OpenStreetMap contributors",
       }).addTo(map);
 
       stores.forEach((store) => {
-        const marker = L.marker([store.lat, store.lng], { icon: alohaPin }).addTo(map);
+        const marker = L.marker([store.lat, store.lng], {
+          icon: alohaPin,
+        }).addTo(map);
 
         marker.bindPopup(
-          `<strong>${store.name}</strong><br />${store.address}<br /><span>${store.phone}</span>`
+          `<strong>${store.name}</strong><br />${store.address}<br /><span>${store.phone}</span>`,
         );
 
-        marker.on('click', () => {
+        marker.on("click", () => {
           setSelectedStore(store);
         });
       });

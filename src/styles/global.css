@@ -1,11 +1,49 @@
 @import "tailwindcss";
 
 @theme {
-  --color-brand: #800080;
-  --color-cta: #ff00ff;
-  --color-highlight: #ffd700;
-  --color-accent: #00ffff;
-  --color-deep-cta: #ff1493;
-  --color-surface: #f5f5f5;
-  --color-text-muted: #6b7280;
+  --color-brand: #4ec5d4;
+  --color-cta: #ff4d5a;
+  --color-highlight: #f6c445;
+  --color-accent: #ff2f92;
+  --color-deep-cta: #e03545;
+  --color-surface: #fff6e8;
+  --color-text-muted: #555555;
+
+  --font-sans: "Inter", ui-sans-serif, system-ui, sans-serif;
+  --font-heading: "Poppins", ui-sans-serif, system-ui, sans-serif;
+  --font-accent: "Pacifico", cursive;
+}
+
+@layer base {
+  body {
+    font-family: var(--font-sans);
+    font-size: 1rem;
+    line-height: 1.6;
+    color: #1a1a1a;
+  }
+
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6 {
+    font-family: var(--font-heading);
+    line-height: 1.2;
+    font-weight: 700;
+    color: #1a1a1a;
+  }
+}
+
+/* ── Scroll-triggered fade-in ── */
+[data-animate] {
+  opacity: 0;
+  transform: translateY(28px);
+  transition:
+    opacity 0.65s cubic-bezier(0.25, 0.46, 0.45, 0.94),
+    transform 0.65s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+}
+[data-animate].visible {
+  opacity: 1;
+  transform: none;
 }

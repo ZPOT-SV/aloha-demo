@@ -1,5 +1,6 @@
 ---
 import NavBar from '../components/NavBar.astro';
+import { ClientRouter } from 'astro:transitions';
 import '../styles/global.css';
 
 interface Props {
@@ -19,6 +20,10 @@ const { title, requiresAuth = false, customerOnly = false } = Astro.props;
 		<link rel="icon" type="image/png" href="/logo.png" />
 		<meta name="generator" content={Astro.generator} />
 		<title>{title}</title>
+		<ClientRouter />
+		<link rel="preconnect" href="https://fonts.googleapis.com" />
+		<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+		<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Pacifico&family=Poppins:wght@700;800;900&display=swap" rel="stylesheet" />
 	</head>
 	<body class="min-h-screen bg-white text-slate-900">
 		{requiresAuth && (
@@ -55,14 +60,121 @@ const { title, requiresAuth = false, customerOnly = false } = Astro.props;
 			)
 		)}
 
-		<div class="min-h-screen bg-[radial-gradient(circle_at_top,_rgba(255,215,0,0.18),_transparent_28%),linear-gradient(180deg,_#ffffff_0%,_#fdf2ff_45%,_#f8fafc_100%)]">
+		<div class="min-h-screen bg-[radial-gradient(circle_at_top,_rgba(78,197,212,0.12),_transparent_28%),linear-gradient(180deg,_#ffffff_0%,_#FFF6E8_45%,_#f8fafc_100%)]">
 			<NavBar />
-			<main>
+			<main id="page-main" style="opacity:0">
 				<slot />
 			</main>
-			<footer class="border-t border-brand/10 bg-white/70 px-6 py-6 text-center text-sm text-text-muted backdrop-blur-sm">
-				© 2026 Aloha Loyalty. El Salvador.
-			</footer>
+		<footer class="bg-[#231F20] text-white">
+			<!-- Main footer grid (hidden on mobile — copyright-only strip shows instead) -->
+			<div class="mx-auto hidden gap-8 px-6 py-8 md:grid md:max-w-6xl md:grid-cols-[1fr_1.6fr_1.4fr]">
+
+				<!-- Col 1: Logo + tagline + socials -->
+				<div class="flex flex-col gap-3">
+					<img src="/logo.png" alt="Aloha Loyalty" class="w-auto object-contain object-left" style="height:168px" />
+					<p class="text-xs leading-relaxed text-white/40">Acumulá Tikis con cada compra en El Salvador.</p>
+					<!-- Social icons -->
+					<div class="flex items-center gap-4 pt-1">
+						<a
+							href="https://www.instagram.com/alohabowls.sv/"
+							target="_blank"
+							rel="noopener noreferrer"
+							aria-label="Instagram"
+							class="text-white/40 transition-colors duration-200 hover:text-[#FF2F92]"
+						>
+							<!-- Instagram -->
+							<svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+								<rect x="2" y="2" width="20" height="20" rx="5" ry="5"/>
+								<path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/>
+								<line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/>
+							</svg>
+						</a>
+						<a
+							href="https://www.tiktok.com/@alohabowls.sv"
+							target="_blank"
+							rel="noopener noreferrer"
+							aria-label="TikTok"
+							class="text-white/40 transition-colors duration-200 hover:text-[#FF2F92]"
+						>
+							<!-- TikTok -->
+							<svg xmlns="http://www.w3.org/2000/svg" width="17" height="17" viewBox="0 0 24 24" fill="currentColor">
+								<path d="M19.59 6.69a4.83 4.83 0 0 1-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 0 1-2.88 2.5 2.89 2.89 0 0 1-2.89-2.89 2.89 2.89 0 0 1 2.89-2.89c.28 0 .54.04.79.1V9.01a6.33 6.33 0 0 0-.79-.05 6.34 6.34 0 0 0-6.34 6.34 6.34 6.34 0 0 0 6.34 6.34 6.34 6.34 0 0 0 6.33-6.34V8.69a8.18 8.18 0 0 0 4.78 1.52V6.76a4.85 4.85 0 0 1-1.01-.07z"/>
+							</svg>
+						</a>
+						<a
+							href="https://www.facebook.com/alohabowls.sv"
+							target="_blank"
+							rel="noopener noreferrer"
+							aria-label="Facebook"
+							class="text-white/40 transition-colors duration-200 hover:text-[#FF2F92]"
+						>
+							<!-- Facebook -->
+							<svg xmlns="http://www.w3.org/2000/svg" width="17" height="17" viewBox="0 0 24 24" fill="currentColor">
+								<path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/>
+							</svg>
+						</a>
+					</div>
+				</div>
+
+				<!-- Col 2: Tiendas 2×2 -->
+				<div>
+					<h3 class="mb-3 text-[10px] font-bold uppercase tracking-[0.25em] text-white/40">Nuestras Tiendas</h3>
+					<div class="grid grid-cols-2 gap-x-4 gap-y-3 text-sm">
+						<div>
+							<p class="font-semibold text-white">Multiplaza</p>
+							<p class="text-xs text-white/50">Antiguo Cuscatlán, La Libertad</p>
+						</div>
+						<div>
+							<p class="font-semibold text-white">Santa Elena</p>
+							<p class="text-xs text-white/50">Blvd. Santa Elena, A. Cuscatlán</p>
+						</div>
+						<div>
+							<p class="font-semibold text-white">San Benito</p>
+							<p class="text-xs text-white/50">Av. La Capilla, San Salvador</p>
+						</div>
+						<div>
+							<p class="font-semibold text-white">CC. Hillside</p>
+							<p class="text-xs text-white/50">CC. Hillside, El Salvador</p>
+						</div>
+					</div>
+				</div>
+
+				<!-- Col 3: Nav + Legal -->
+				<div class="grid grid-cols-2 gap-4">
+					<div>
+						<h3 class="mb-3 text-[10px] font-bold uppercase tracking-[0.25em] text-white/40">Navegación</h3>
+						<ul class="space-y-1.5 text-sm">
+							<li><a href="/" class="text-white/60 transition hover:text-white">Inicio</a></li>
+							<li><a href="/menu" class="text-white/60 transition hover:text-white">Menú</a></li>
+							<li><a href="/tiendas" class="text-white/60 transition hover:text-white">Tiendas</a></li>
+							<li><a href="/retos" class="text-white/60 transition hover:text-white">Retos</a></li>
+							<li><a href="/dashboard" class="text-white/60 transition hover:text-white">Mi Cuenta</a></li>
+						</ul>
+					</div>
+					<div>
+						<h3 class="mb-3 text-[10px] font-bold uppercase tracking-[0.25em] text-white/40">Legal</h3>
+						<ul class="space-y-1.5 text-xs">
+							<li><span class="cursor-not-allowed text-white/30">Términos</span></li>
+							<li><span class="cursor-not-allowed text-white/30">Privacidad</span></li>
+							<li><span class="cursor-not-allowed text-white/30">Cookies</span></li>
+						</ul>
+					</div>
+				</div>
+
+			</div>
+			<div class="px-6 py-3 text-center text-[11px] text-white/25 md:border-t md:border-white/10">
+				© 2026 Aloha Loyalty. El Salvador. Todos los derechos reservados.
+			</div>
+		</footer>
 		</div>
+
+		<script>
+			import { gsap } from 'gsap';
+			function animateIn() {
+				gsap.fromTo('#page-main', { opacity: 0, y: 16 }, { opacity: 1, y: 0, duration: 0.4, ease: 'power2.out', clearProps: 'all' });
+			}
+			animateIn();
+			document.addEventListener('astro:page-load', animateIn);
+		</script>
 	</body>
 </html>

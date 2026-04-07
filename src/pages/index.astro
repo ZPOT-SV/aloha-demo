@@ -1,5 +1,6 @@
 ---
 import AuthModal from '../components/AuthModal';
+import ProductCarousel from '../components/ProductCarousel';
 import Layout from '../layouts/Layout.astro';
 
 const tiers = [
@@ -25,105 +26,148 @@ const tiers = [
 ---
 
 <Layout title="Aloha Loyalty" requiresAuth={false}>
-  <section class="mx-auto flex max-w-6xl flex-col gap-16 px-6 pb-20 pt-14">
-    <div class="grid items-center gap-10 lg:grid-cols-[1.15fr_0.85fr]">
-      <div class="space-y-8">
-        <div class="inline-flex items-center gap-2 rounded-full border border-highlight/50 bg-highlight/20 px-4 py-2 text-sm font-semibold text-slate-700">
-          <span>🌴</span>
-          <span>Programa de lealtad tropical para tus compras favoritas</span>
-        </div>
 
-        <div class="space-y-5">
-          <h1 class="max-w-3xl text-5xl font-black tracking-tight text-slate-950 md:text-6xl">
-            Acumulá Tikis, Viví la Experiencia
-          </h1>
-          <p class="max-w-2xl text-lg text-text-muted md:text-xl">
-            Ganás 1 Tiki Point por cada $1 que comprás
-          </p>
-        </div>
-
-        <div class="flex flex-col gap-4 sm:flex-row">
-          <button
-            id="hero-open-auth"
-            type="button"
-            class="hidden rounded-full bg-cta px-7 py-3.5 text-base font-bold text-white shadow-xl shadow-cta/30 transition hover:bg-deep-cta"
-          >
-            Empezá Ahora
-          </button>
-          <a
-            href="/menu"
-            class="rounded-full border-2 border-brand px-7 py-3.5 text-center text-base font-bold text-brand transition hover:bg-brand hover:text-white"
-          >
-            Ver Menú
-          </a>
-        </div>
+  <!-- ░░ HERO ░░ -->
+  <section class="mx-auto grid max-w-6xl items-center gap-12 px-6 pb-16 pt-14 lg:grid-cols-[1.1fr_0.9fr]">
+    <div class="space-y-8">
+      <div class="space-y-4">
+        <h1 class="max-w-xl text-5xl font-black leading-[1.1] tracking-tight text-slate-950 md:text-6xl">
+          Acumulá Tikis,<br/>
+          <span class="bg-gradient-to-r from-brand to-accent bg-clip-text text-transparent">Viví la Experiencia</span>
+        </h1>
+        <p class="max-w-lg text-lg leading-relaxed text-text-muted md:text-xl">
+          Ganás 1 Tiki por cada $1 que comprás. Canjeá premios, completá retos y subí de nivel.
+        </p>
       </div>
 
-      <div class="grid gap-4 rounded-[2rem] border border-brand/10 bg-white/80 p-6 shadow-2xl shadow-brand/10 backdrop-blur-sm">
-        <div class="rounded-[1.5rem] bg-brand p-6 text-white">
-          <p
-            id="hero-balance-label"
-            class="text-sm font-semibold uppercase tracking-[0.28em] text-white/80"
-          >
-            Saldo de ejemplo
-          </p>
-          <p id="hero-balance-value" class="mt-4 text-5xl font-black">142</p>
-          <p class="mt-2 text-lg font-semibold">Tikis listos para canjear</p>
+      <div class="flex flex-wrap gap-4">
+        <button
+          id="hero-open-auth"
+          type="button"
+          class="hidden rounded-full bg-brand px-8 py-3.5 text-base font-bold text-white shadow-xl shadow-brand/30 transition hover:brightness-90"
+        >
+          Empezá Ahora
+        </button>
+        <a
+          href="/menu"
+          class="rounded-full border-2 border-brand px-8 py-3.5 text-center text-base font-bold text-brand transition hover:bg-brand hover:text-white"
+        >
+          Ver Menú
+        </a>
+      </div>
+    </div>
+
+    <!-- Tiki mascot (logged out) -->
+    <div id="hero-tiki" class="flex items-center justify-center">
+      <img src="/tiki.png" alt="Tiki mascot" class="w-full max-w-sm drop-shadow-2xl" />
+    </div>
+
+    <!-- Balance widget (logged in only) -->
+    <div id="hero-widget" class="hidden overflow-hidden rounded-[2rem] border border-brand/10 bg-white shadow-2xl shadow-brand/10">
+      <div class="bg-gradient-to-br from-brand to-[#2F80ED] p-6 text-white">
+        <p id="hero-balance-label" class="text-xs font-bold uppercase tracking-[0.3em] text-white/75">
+          Saldo
+        </p>
+        <p id="hero-balance-value" class="mt-3 text-6xl font-black">0</p>
+        <p class="mt-1 text-base font-semibold text-white/90">Tikis listos para canjear</p>
+      </div>
+      <div class="divide-y divide-slate-50">
+        <div class="flex items-center gap-3 px-6 py-4">
+          <span class="text-2xl">🌊</span>
+          <div>
+            <p class="text-xs font-semibold text-text-muted">Nivel actual</p>
+            <p id="hero-tier-name" class="font-bold text-brand">Rise</p>
+          </div>
         </div>
-        <div class="grid gap-4 md:grid-cols-3 lg:grid-cols-1">
-          <div class="rounded-[1.5rem] bg-surface p-5">
-            <p class="text-sm font-semibold text-text-muted">Nivel actual</p>
-            <p class="mt-2 text-2xl font-black text-brand">🌊 Vibe</p>
+        <div class="flex items-center gap-3 px-6 py-4">
+          <span class="text-2xl">🎁</span>
+          <div>
+            <p class="text-xs font-semibold text-text-muted">Premio cercano</p>
+            <p class="font-bold text-slate-900">Bebida Gratis</p>
           </div>
-          <div class="rounded-[1.5rem] bg-surface p-5">
-            <p class="text-sm font-semibold text-text-muted">Premio cercano</p>
-            <p class="mt-2 text-2xl font-black text-slate-900">🎁 Bebida Gratis</p>
-          </div>
-          <div class="rounded-[1.5rem] bg-surface p-5">
-            <p class="text-sm font-semibold text-text-muted">Reto activo</p>
-            <p class="mt-2 text-2xl font-black text-slate-900">⚡ Comprador Frecuente</p>
+        </div>
+        <div class="flex items-center gap-3 px-6 py-4">
+          <span class="text-2xl">⚡</span>
+          <div>
+            <p class="text-xs font-semibold text-text-muted">Reto activo</p>
+            <p class="font-bold text-slate-900">Comprador Frecuente</p>
           </div>
         </div>
       </div>
     </div>
+  </section>
 
-    <section class="grid gap-5 md:grid-cols-3">
-      <article class="rounded-[1.75rem] border border-brand/10 bg-white/75 p-6 shadow-lg shadow-brand/5">
-        <p class="text-3xl">🌺</p>
-        <h2 class="mt-4 text-2xl font-black text-slate-950">Acumulá Tikis</h2>
-        <p class="mt-3 text-text-muted">Convertí cada compra en puntos que te acercan a más recompensas.</p>
-      </article>
-      <article class="rounded-[1.75rem] border border-brand/10 bg-white/75 p-6 shadow-lg shadow-brand/5">
-        <p class="text-3xl">🎁</p>
-        <h2 class="mt-4 text-2xl font-black text-slate-950">Canjeá Premios</h2>
-        <p class="mt-3 text-text-muted">Usá tus tikis para bebidas, descuentos y experiencias exclusivas.</p>
-      </article>
-      <article class="rounded-[1.75rem] border border-brand/10 bg-white/75 p-6 shadow-lg shadow-brand/5">
-        <p class="text-3xl">⚡</p>
-        <h2 class="mt-4 text-2xl font-black text-slate-950">Completá Retos</h2>
-        <p class="mt-3 text-text-muted">Desbloqueá bonos extra con misiones semanales y metas especiales.</p>
-      </article>
-    </section>
+  <!-- ░░ HOW IT WORKS — full-width band ░░ -->
+  <section class="bg-[#FFF6E8] py-16">
+    <div class="mx-auto max-w-6xl px-6">
+      <p data-animate class="text-center text-xs font-bold uppercase tracking-[0.3em] text-text-muted">Cómo funciona</p>
+      <h2 data-animate class="mt-2 text-center font-heading text-3xl font-black text-slate-950 md:text-4xl">
+        Tres pasos, infinitos beneficios
+      </h2>
+      <div class="mt-10 grid gap-0 md:grid-cols-3">
+        <div data-animate class="group relative flex flex-col items-center px-8 py-6 text-center md:border-r md:border-dashed md:border-slate-200">
+          <div class="grid h-14 w-14 place-items-center rounded-2xl bg-brand text-2xl text-white shadow-lg shadow-brand/30">🛒</div>
+          <h3 class="mt-4 text-xl font-bold text-slate-900">Comprá</h3>
+          <p class="mt-2 text-sm leading-relaxed text-text-muted">Cada $1 que gastás en nuestras tiendas suma 1 Tiki automáticamente.</p>
+        </div>
+        <div data-animate class="group relative flex flex-col items-center px-8 py-6 text-center md:border-r md:border-dashed md:border-slate-200">
+          <div class="grid h-14 w-14 place-items-center rounded-2xl bg-highlight text-2xl shadow-lg shadow-highlight/30">⚡</div>
+          <h3 class="mt-4 text-xl font-bold text-slate-900">Completá Retos</h3>
+          <p class="mt-2 text-sm leading-relaxed text-text-muted">Misiones semanales que multiplicán tus puntos y te dan bonos extra.</p>
+        </div>
+        <div data-animate class="group relative flex flex-col items-center px-8 py-6 text-center">
+          <div class="grid h-14 w-14 place-items-center rounded-2xl bg-cta text-2xl text-white shadow-lg shadow-cta/30">🎁</div>
+          <h3 class="mt-4 text-xl font-bold text-slate-900">Canjeá</h3>
+          <p class="mt-2 text-sm leading-relaxed text-text-muted">Usá tus Tikis por bebidas gratis, descuentos y experiencias exclusivas.</p>
+        </div>
+      </div>
+    </div>
+  </section>
 
-    <section class="space-y-6">
-      <div class="space-y-2">
-        <p class="text-sm font-semibold uppercase tracking-[0.24em] text-text-muted">Niveles Aloha</p>
-        <h2 class="text-3xl font-black text-slate-950 md:text-4xl">Subí de nivel y mejorá tus beneficios</h2>
+  <!-- ░░ CAROUSEL — Productos más vendidos ░░ -->
+  <section class="mx-auto max-w-6xl px-6 py-20">
+    <div class="grid items-center gap-12 lg:grid-cols-[1fr_1.1fr]">
+      <div data-animate class="space-y-4">
+        <p class="text-xs font-bold uppercase tracking-[0.3em] text-brand">Menú destacado</p>
+        <h2 class="font-heading text-4xl font-black leading-tight text-slate-950 md:text-5xl">
+          Productos<br/>más vendidos
+        </h2>
+        <p class="max-w-sm text-text-muted leading-relaxed">
+          Descubrí nuestras opciones más populares. Cada compra suma Tikis para tus premios.
+        </p>
+        <a href="/menu" class="inline-flex items-center gap-2 text-sm font-bold text-brand transition hover:text-deep-cta">
+          Ver menú completo
+          <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
+        </a>
       </div>
 
-      <div class="grid gap-5 md:grid-cols-3">
-        {tiers.map((tier) => (
-          <article class="rounded-[1.75rem] border border-brand/10 bg-white p-6 shadow-xl shadow-brand/5">
-            <div class="flex items-center justify-between">
-              <span class="text-4xl">{tier.emoji}</span>
-              <span class="rounded-full bg-brand/8 px-3 py-1 text-sm font-bold text-brand">{tier.range}</span>
+      <div data-animate>
+        <ProductCarousel client:load />
+      </div>
+    </div>
+  </section>
+
+  <!-- ░░ TIERS — clean rows ░░ -->
+  <section class="bg-[#FFF6E8] py-16">
+    <div class="mx-auto max-w-6xl px-6">
+      <p data-animate class="text-xs font-bold uppercase tracking-[0.3em] text-text-muted">Niveles</p>
+      <h2 data-animate class="mt-2 font-heading text-3xl font-black text-slate-950 md:text-4xl">Subí de nivel</h2>
+      <div class="mt-8 space-y-3">
+        {tiers.map((tier, i) => (
+          <div data-animate class="flex items-center gap-5 rounded-2xl border border-brand/10 bg-white px-6 py-5 shadow-sm">
+            <span class="text-4xl">{tier.emoji}</span>
+            <div class="min-w-0 flex-1">
+              <div class="flex flex-wrap items-center gap-3">
+                <h3 class="text-lg font-bold text-slate-900">{tier.name}</h3>
+                <span class="rounded-full bg-brand/10 px-3 py-0.5 text-xs font-bold text-brand">{tier.range}</span>
+              </div>
+              <p class="mt-1 text-sm text-text-muted">{tier.benefit}</p>
             </div>
-            <h3 class="mt-5 text-2xl font-black text-slate-950">{tier.name}</h3>
-            <p class="mt-3 text-text-muted">{tier.benefit}</p>
-          </article>
+            <div class={`shrink-0 h-2 w-2 rounded-full ${i === 0 ? 'bg-highlight' : i === 1 ? 'bg-brand' : 'bg-accent'}`}></div>
+          </div>
         ))}
       </div>
-    </section>
+    </div>
   </section>
 
   <AuthModal client:load />
@@ -132,46 +176,52 @@ const tiers = [
     import { tikiBalance, userSession } from '../stores';
 
     const heroButton = document.getElementById('hero-open-auth');
-    const heroBalanceLabel = document.getElementById('hero-balance-label');
+    const heroTiki = document.getElementById('hero-tiki');
+    const heroWidget = document.getElementById('hero-widget');
     const heroBalanceValue = document.getElementById('hero-balance-value');
-    const exampleBalanceLabel = 'Saldo de ejemplo';
-    const liveBalanceLabel = 'Saldo';
-    const exampleBalanceValue = '142';
+    const heroTierName = document.getElementById('hero-tier-name');
 
-    const syncHeroButtonVisibility = (): void => {
+    const getTierName = (tikis: number): string => {
+      if (tikis >= 150) return 'Aloha 🏄';
+      if (tikis >= 50) return 'Vibe 🌊';
+      return 'Rise 🌺';
+    };
+
+    const syncHero = (): void => {
       const session = userSession.get();
+      const loggedIn = session?.role === 'customer';
+
       heroButton?.classList.toggle('hidden', session !== null);
-    };
+      heroTiki?.classList.toggle('hidden', loggedIn);
+      heroWidget?.classList.toggle('hidden', !loggedIn);
 
-    const syncHeroBalance = (): void => {
-      const session = userSession.get();
-      const showLiveBalance = session?.role === 'customer';
-
-      if (heroBalanceLabel) {
-        heroBalanceLabel.textContent = showLiveBalance ? liveBalanceLabel : exampleBalanceLabel;
-      }
-
-      if (heroBalanceValue) {
-        heroBalanceValue.textContent = showLiveBalance
-          ? String(tikiBalance.get())
-          : exampleBalanceValue;
+      if (loggedIn) {
+        const tikis = tikiBalance.get();
+        if (heroBalanceValue) heroBalanceValue.textContent = String(tikis);
+        if (heroTierName) heroTierName.textContent = getTierName(tikis);
       }
     };
 
-    userSession.subscribe(() => {
-      syncHeroButtonVisibility();
-      syncHeroBalance();
-    });
+    userSession.subscribe(syncHero);
+    tikiBalance.subscribe(syncHero);
+    syncHero();
+    heroButton?.addEventListener('click', () => window.dispatchEvent(new CustomEvent('aloha:open-auth')));
+  </script>
 
-    tikiBalance.subscribe(() => {
-      syncHeroBalance();
-    });
-
-    syncHeroButtonVisibility();
-    syncHeroBalance();
-
-    heroButton?.addEventListener('click', () => {
-      window.dispatchEvent(new CustomEvent('aloha:open-auth'));
-    });
+  <script>
+    // Scroll-triggered fade-in
+    const observer = new IntersectionObserver(
+      (entries) => {
+        for (const entry of entries) {
+          if (entry.isIntersecting) {
+            entry.target.classList.add('visible');
+            observer.unobserve(entry.target);
+          }
+        }
+      },
+      { threshold: 0.1, rootMargin: '0px 0px -40px 0px' }
+    );
+    document.querySelectorAll('[data-animate]').forEach((el) => observer.observe(el));
   </script>
 </Layout>
+

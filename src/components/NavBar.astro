@@ -1,66 +1,275 @@
-<header class="sticky top-0 z-40 border-b border-brand/10 bg-white/80 backdrop-blur-xl">
-  <div class="mx-auto flex max-w-6xl flex-wrap items-start justify-between gap-3 px-4 py-3 sm:gap-4 sm:px-6 sm:py-4">
-    <a href="/" class="flex min-w-0 flex-1 items-center gap-3 text-brand sm:flex-none">
-      <img
-        src="/logo.png"
-        alt="Aloha Loyalty"
-        class="h-10 w-auto object-contain sm:h-12"
-      />
-      <div class="min-w-0">
-        <p class="text-[10px] font-semibold uppercase tracking-[0.24em] text-text-muted sm:text-xs sm:tracking-[0.32em]">Aloha Loyalty</p>
-        <p class="text-base font-black leading-tight sm:text-lg">El sabor que premia</p>
+---
+import NavSearch from './NavSearch';
+---
+
+<!--
+  Thin yellow strip. Logo is absolute-positioned, hangs BELOW the bar
+  over the page content (overflow-visible). The width-placeholder keeps
+  nav links from going under the logo area.
+-->
+<header class="sticky top-0 z-40 overflow-visible"
+  style="background:#F6C445;box-shadow:0 2px 8px rgba(0,0,0,0.14)">
+
+  <div class="relative mx-auto max-w-6xl px-4 sm:px-6">
+
+    <!-- ── BAR ROW (stays inside the 52px yellow strip) ─────────────── -->
+    <div class="flex items-center gap-3" style="height:52px">
+
+      <!-- Width-placeholder (desktop only — logo is centered on mobile) -->
+      <div class="hidden shrink-0 md:block md:w-36" aria-hidden="true"></div>
+
+      <!-- Desktop nav -->
+      <nav class="hidden items-center gap-1 md:flex">
+        <a class="nav-link group" href="/">
+          <span class="nav-icon">
+            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="m3 9 9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
+          </span>
+          <span>Inicio</span>
+          <span class="nav-underline"></span>
+        </a>
+        <a class="nav-link group" href="/menu">
+          <span class="nav-icon">
+            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 2v7c0 1.1.9 2 2 2h4a2 2 0 0 0 2-2V2"/><path d="M7 2v20"/><path d="M21 15V2a5 5 0 0 0-5 5v6c0 1.1.9 2 2 2h3Zm0 0v7"/></svg>
+          </span>
+          <span>Menú</span>
+          <span class="nav-underline"></span>
+        </a>
+        <a class="nav-link group" href="/tiendas">
+          <span class="nav-icon">
+            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9h18v10a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V9Z"/><path d="m3 9 2.45-4.9A2 2 0 0 1 7.24 3h9.52a2 2 0 0 1 1.8 1.1L21 9"/><path d="M12 3v6"/></svg>
+          </span>
+          <span>Tiendas</span>
+          <span class="nav-underline"></span>
+        </a>
+        <a class="nav-link group" href="/retos">
+          <span class="nav-icon">
+            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9H4.5a2.5 2.5 0 0 1 0-5H6"/><path d="M18 9h1.5a2.5 2.5 0 0 0 0-5H18"/><path d="M4 22h16"/><path d="M10 14.66V17c0 .55-.47.98-.97 1.21C7.85 18.75 7 20.24 7 22"/><path d="M14 14.66V17c0 .55.47.98.97 1.21C16.15 18.75 17 20.24 17 22"/><path d="M18 2H6v7a6 6 0 0 0 12 0V2Z"/></svg>
+          </span>
+          <span>Retos</span>
+          <span class="nav-underline"></span>
+        </a>
+      </nav>
+
+      <!-- Desktop search (fills space between nav and right icons) -->
+      <div class="hidden flex-1 md:block">
+        <NavSearch client:load />
       </div>
+
+      <!-- Right actions -->
+      <div class="ml-auto flex items-center gap-2">
+
+        <!-- Cart -->
+        <button id="cart-button" type="button"
+          class="relative hidden rounded-full border border-black/15 bg-black/8 p-2.5 text-slate-900 transition hover:bg-black/15 hover:scale-105 md:inline-flex">
+          <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><circle cx="8" cy="21" r="1"/><circle cx="19" cy="21" r="1"/><path d="M2.05 2.05h2l2.66 12.42a2 2 0 0 0 2 1.58h9.78a2 2 0 0 0 1.95-1.57l1.65-7.43H5.12"/></svg>
+          <span id="cart-count"
+            class="absolute -right-1.5 -top-1.5 hidden min-w-5 rounded-full bg-cta px-1 py-0.5 text-center text-[10px] font-bold text-white">0</span>
+        </button>
+
+        <!-- Login button -->
+        <button id="login-button" type="button"
+          class="hidden items-center gap-1.5 whitespace-nowrap rounded-full bg-accent px-3 py-2 text-sm font-bold text-white shadow-lg shadow-accent/30 transition hover:brightness-110 hover:scale-105 md:inline-flex md:px-4">
+          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M15 3h4a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2h-4"/><polyline points="10 17 15 12 10 7"/><line x1="15" y1="12" x2="3" y2="12"/></svg>
+          <span class="hidden sm:inline">Iniciar Sesión</span>
+        </button>
+
+        <!-- User actions (logged-in) -->
+        <div id="user-actions" class="hidden items-center gap-2">
+          <div class="hidden shrink-0 rounded-full bg-black/10 px-3 py-2 text-sm font-bold text-slate-900 border border-black/15 sm:block">
+            <span id="user-tikis">0</span> Tikis
+          </div>
+          <a href="/dashboard"
+            class="flex items-center gap-1.5 rounded-full border border-black/15 bg-black/8 px-3 py-2 text-sm font-semibold text-slate-900 transition hover:bg-black/15">
+            <span id="user-tier-emoji" class="shrink-0">🌺</span>
+            <span id="user-name" class="hidden max-w-[7rem] truncate sm:block">Invitado</span>
+          </a>
+          <button id="logout-button" type="button"
+            class="hidden whitespace-nowrap text-sm font-semibold text-slate-600 transition hover:text-slate-900 sm:block">Salir</button>
+        </div>
+
+        <!-- Hamburger (mobile only) -->
+        <button id="hamburger-btn" type="button"
+          class="md:hidden ml-1 rounded-full border border-black/15 bg-black/8 p-2.5 text-slate-900 transition hover:bg-black/15"
+          aria-label="Menú" aria-expanded="false">
+          <svg id="ham-icon" xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+            <line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/>
+          </svg>
+          <svg id="close-icon" class="hidden" xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+            <line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/>
+          </svg>
+        </button>
+      </div>
+    </div>
+    <!-- ── END BAR ROW ──────────────────────────────────────────────── -->
+
+    <!-- ── LOGO: absolute, centered on mobile / left-hanging on desktop ── -->
+    <a href="/" class="nav-logo absolute z-50 shrink-0">
+      <img src="/logo.png" alt="Aloha Loyalty"
+           class="h-24 w-auto object-contain drop-shadow-xl md:h-40" />
     </a>
 
-    <nav class="hidden items-center gap-6 text-sm font-semibold text-slate-700 md:flex">
-      <a class="transition hover:text-brand" href="/">Inicio</a>
-      <a class="transition hover:text-brand" href="/menu">Menú</a>
-      <a class="transition hover:text-brand" href="/tiendas">Tiendas</a>
-      <a class="transition hover:text-brand" href="/retos">Retos</a>
-    </nav>
 
-    <div class="flex w-full flex-wrap items-center justify-between gap-2 sm:w-auto sm:justify-end sm:gap-3">
-      <button
-        id="cart-button"
-        type="button"
-        class="relative shrink-0 rounded-full border border-brand/15 bg-white px-3 py-2 text-base text-brand shadow-sm transition hover:bg-brand/5 sm:px-4 sm:text-lg"
-      >
-        🛒
-        <span
-          id="cart-count"
-          class="absolute -right-2 -top-2 hidden min-w-5 rounded-full bg-red-500 px-1.5 py-0.5 text-xs font-bold text-white"
-        >
-          0
-        </span>
-      </button>
-      <button
-        id="login-button"
-        type="button"
-        class="ml-auto whitespace-nowrap rounded-full bg-cta px-4 py-2.5 text-sm font-bold text-white shadow-lg shadow-cta/20 transition hover:bg-deep-cta sm:ml-0 sm:px-5"
-      >
-        Iniciar Sesión
+  </div>
+
+  <!-- Mobile nav drawer -->
+  <nav id="mobile-nav"
+       class="absolute inset-x-0 overflow-hidden transition-all duration-300 ease-in-out md:hidden"
+       style="top:100%;max-height:0;opacity:0;background:#F6C445;box-shadow:0 8px 24px rgba(0,0,0,0.12);z-index:50"
+       aria-hidden="true">
+    <div class="flex flex-col gap-1 border-t border-black/10 px-4 py-3">
+      <!-- Search inside drawer -->
+      <div class="pb-2 pt-1"><NavSearch client:load /></div>
+      <a class="mobile-nav-link" href="/">
+        <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="m3 9 9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
+        Inicio
+      </a>
+      <a class="mobile-nav-link" href="/menu">
+        <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 2v7c0 1.1.9 2 2 2h4a2 2 0 0 0 2-2V2"/><path d="M7 2v20"/><path d="M21 15V2a5 5 0 0 0-5 5v6c0 1.1.9 2 2 2h3Zm0 0v7"/></svg>
+        Menú
+      </a>
+      <a class="mobile-nav-link" href="/tiendas">
+        <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9h18v10a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V9Z"/><path d="m3 9 2.45-4.9A2 2 0 0 1 7.24 3h9.52a2 2 0 0 1 1.8 1.1L21 9"/><path d="M12 3v6"/></svg>
+        Tiendas
+      </a>
+      <a class="mobile-nav-link" href="/retos">
+        <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9H4.5a2.5 2.5 0 0 1 0-5H6"/><path d="M18 9h1.5a2.5 2.5 0 0 0 0-5H18"/><path d="M4 22h16"/><path d="M10 14.66V17c0 .55-.47.98-.97 1.21C7.85 18.75 7 20.24 7 22"/><path d="M14 14.66V17c0 .55.47.98.97 1.21C16.15 18.75 17 20.24 17 22"/><path d="M18 2H6v7a6 6 0 0 0 12 0V2Z"/></svg>
+        Retos
+      </a>
+
+      <!-- Divider -->
+      <div class="my-1 border-t border-black/10"></div>
+
+      <!-- Cart row -->
+      <button id="drawer-cart-btn" type="button" class="mobile-nav-link w-full text-left">
+        <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><circle cx="8" cy="21" r="1"/><circle cx="19" cy="21" r="1"/><path d="M2.05 2.05h2l2.66 12.42a2 2 0 0 0 2 1.58h9.78a2 2 0 0 0 1.95-1.57l1.65-7.43H5.12"/></svg>
+        Carrito
+        <span id="drawer-cart-count" class="ml-auto hidden min-w-5 rounded-full bg-cta px-1.5 py-0.5 text-center text-[10px] font-bold text-white">0</span>
       </button>
 
-      <div id="user-actions" class="hidden w-full flex-wrap items-center justify-end gap-2 sm:w-auto sm:flex-nowrap sm:gap-3">
-        <div class="shrink-0 rounded-full bg-highlight px-3 py-2 text-sm font-bold text-slate-900 shadow-md shadow-highlight/30 sm:px-4">
-          <span id="user-tikis">0</span>
-          <span>Tikis</span>
-        </div>
-        <a href="/dashboard" class="flex min-w-0 max-w-full cursor-pointer items-center gap-2 rounded-full border border-brand/15 bg-white px-4 py-2 text-sm font-semibold text-slate-700 shadow-sm transition-opacity hover:opacity-80 sm:max-w-none">
-          <span id="user-tier-emoji" class="shrink-0">🌺</span>
-          <span id="user-name" class="max-w-[7rem] truncate sm:max-w-none">Invitado</span>
+      <!-- Login section (shown when logged out) -->
+      <div id="drawer-login-section">
+        <button id="drawer-login-btn" type="button"
+          class="mt-1 flex w-full items-center justify-center gap-2 rounded-2xl bg-accent py-3 text-sm font-bold text-white shadow-lg shadow-accent/30 transition hover:brightness-110">
+          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M15 3h4a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2h-4"/><polyline points="10 17 15 12 10 7"/><line x1="15" y1="12" x2="3" y2="12"/></svg>
+          Iniciar Sesión
+        </button>
+      </div>
+
+      <!-- User section (shown when logged in) -->
+      <div id="drawer-user-section" class="hidden flex-col gap-1">
+        <a href="/dashboard" class="mobile-nav-link">
+          <span id="drawer-user-tier">🌺</span>
+          <span id="drawer-user-name" class="truncate">Invitado</span>
+          <span class="ml-auto shrink-0 rounded-full bg-black/10 px-2 py-1 text-xs font-bold"><span id="drawer-user-tikis">0</span> Tikis</span>
         </a>
-        <button
-          id="logout-button"
-          type="button"
-          class="whitespace-nowrap text-sm font-semibold text-brand underline-offset-4 transition hover:underline"
-        >
+        <button id="drawer-logout-btn" type="button" class="mobile-nav-link w-full text-left text-red-800">
+          <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><polyline points="16 17 21 12 16 7"/><line x1="21" y1="12" x2="9" y2="12"/></svg>
           Salir
         </button>
       </div>
     </div>
-  </div>
+  </nav>
+
 </header>
+
+<style>
+  /* Mobile: logo centered horizontally, sits at bar top, hangs below */
+  .nav-logo {
+    left: 50%;
+    top: 0;
+    transform: translateX(-50%);
+    transition: opacity 0.2s ease, transform 0.2s ease;
+  }
+  .nav-logo:hover {
+    transform: translateX(-50%) scale(1.04);
+    opacity: 0.85;
+  }
+  /* Desktop: logo anchored left, hanging below bar */
+  @media (min-width: 768px) {
+    .nav-logo {
+      left: -30px;
+      top: -20px;
+      transform: none;
+    }
+    .nav-logo:hover {
+      transform: scale(1.04);
+    }
+  }
+
+  .nav-link {
+    position: relative;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.375rem;
+    padding: 0.5rem 0.875rem;
+    border-radius: 9999px;
+    font-size: 0.875rem;
+    font-weight: 600;
+    color: rgba(0,0,0,0.7);
+    transition: color 0.2s ease, background 0.2s ease, transform 0.2s ease;
+    text-decoration: none;
+  }
+  .nav-link:hover {
+    color: #1a1a1a;
+    background: rgba(0,0,0,0.1);
+    transform: translateY(-1px);
+  }
+  .nav-link.active {
+    color: #1a1a1a;
+    background: rgba(0,0,0,0.1);
+  }
+
+  .nav-icon {
+    display: inline-flex;
+    align-items: center;
+    transition: transform 0.2s ease;
+  }
+  .nav-link:hover .nav-icon {
+    transform: scale(1.15);
+  }
+
+  .nav-underline {
+    position: absolute;
+    bottom: 4px;
+    left: 50%;
+    transform: translateX(-50%) scaleX(0);
+    width: 60%;
+    height: 2px;
+    border-radius: 1px;
+    background: rgba(0,0,0,0.4);
+    transition: transform 0.25s ease;
+    transform-origin: center;
+  }
+  .nav-link:hover .nav-underline,
+  .nav-link.active .nav-underline {
+    transform: translateX(-50%) scaleX(1);
+  }
+
+  .mobile-nav-link {
+    display: flex;
+    align-items: center;
+    gap: 0.625rem;
+    padding: 0.75rem 1rem;
+    border-radius: 1rem;
+    font-size: 0.9375rem;
+    font-weight: 600;
+    color: rgba(0,0,0,0.75);
+    text-decoration: none;
+    transition: background 0.18s ease, color 0.18s ease;
+  }
+  .mobile-nav-link:hover,
+  .mobile-nav-link.active {
+    background: rgba(0,0,0,0.1);
+    color: #1a1a1a;
+  }
+
+  /* Force cart, login, user-actions off on mobile — they live in the drawer */
+  @media (max-width: 767px) {
+    #cart-button   { display: none !important; }
+    #login-button  { display: none !important; }
+    #user-actions  { display: none !important; }
+  }
+</style>
 
 <script>
   import { cart, setCartOpen } from '../stores';
@@ -74,12 +283,16 @@
     const hasSession = Boolean(window.localStorage.getItem(sessionKey));
     const total = items.reduce((sum, entry) => sum + entry.quantity, 0);
 
-    if (!cartCount) {
-      return;
+    if (cartCount) {
+      cartCount.textContent = String(total);
+      cartCount.classList.toggle('hidden', total === 0 || !hasSession);
     }
 
-    cartCount.textContent = String(total);
-    cartCount.classList.toggle('hidden', total === 0 || !hasSession);
+    const drawerCount = document.getElementById('drawer-cart-count');
+    if (drawerCount) {
+      drawerCount.textContent = String(total);
+      drawerCount.classList.toggle('hidden', total === 0 || !hasSession);
+    }
   };
 
   cart.subscribe((items) => {
@@ -92,7 +305,14 @@
       window.location.href = '/?auth=required';
       return;
     }
+    setCartOpen(true);
+  });
 
+  document.getElementById('drawer-cart-btn')?.addEventListener('click', () => {
+    if (!window.localStorage.getItem(sessionKey)) {
+      window.location.href = '/?auth=required';
+      return;
+    }
     setCartOpen(true);
   });
 </script>
@@ -128,11 +348,19 @@
 
   const syncNavbar = () => {
     const rawSession = window.localStorage.getItem(sessionKey);
+    const drawerLogin = document.getElementById('drawer-login-section');
+    const drawerUser = document.getElementById('drawer-user-section');
+    const drawerUserName = document.getElementById('drawer-user-name');
+    const drawerUserTier = document.getElementById('drawer-user-tier');
+    const drawerUserTikis = document.getElementById('drawer-user-tikis');
 
     if (!rawSession) {
       loginButton?.classList.remove('hidden');
       userActions?.classList.add('hidden');
       cartCount?.classList.add('hidden');
+      drawerLogin?.classList.remove('hidden');
+      drawerUser?.classList.add('hidden');
+      drawerUser?.classList.remove('flex');
       return;
     }
 
@@ -155,15 +383,31 @@
       loginButton?.classList.add('hidden');
       userActions?.classList.remove('hidden');
       userActions?.classList.add('flex');
+
+      // Sync drawer user section
+      if (drawerUserName) drawerUserName.textContent = session.username;
+      if (drawerUserTier) drawerUserTier.textContent = getTierEmoji(session.tierId);
+      if (drawerUserTikis) drawerUserTikis.textContent = String(storedTikis);
+      drawerLogin?.classList.add('hidden');
+      drawerUser?.classList.remove('hidden');
+      drawerUser?.classList.add('flex');
     } catch {
       logoutUser();
       loginButton?.classList.remove('hidden');
       userActions?.classList.add('hidden');
       cartCount?.classList.add('hidden');
+      document.getElementById('drawer-login-section')?.classList.remove('hidden');
+      const du = document.getElementById('drawer-user-section');
+      du?.classList.add('hidden');
+      du?.classList.remove('flex');
     }
   };
 
   loginButton?.addEventListener('click', () => {
+    window.dispatchEvent(new CustomEvent('aloha:open-auth'));
+  });
+
+  document.getElementById('drawer-login-btn')?.addEventListener('click', () => {
     window.dispatchEvent(new CustomEvent('aloha:open-auth'));
   });
 
@@ -172,7 +416,69 @@
     window.location.href = '/';
   });
 
+  document.getElementById('drawer-logout-btn')?.addEventListener('click', () => {
+    logoutUser();
+    window.location.href = '/';
+  });
+
   window.addEventListener('storage', syncNavbar);
   window.addEventListener('aloha:auth-changed', syncNavbar);
   syncNavbar();
+</script>
+
+<script>
+  // Mark active nav link based on current path
+  const path = window.location.pathname;
+  document.querySelectorAll<HTMLAnchorElement>('.nav-link, .mobile-nav-link').forEach((link) => {
+    const href = link.getAttribute('href') ?? '';
+    const isActive = href === '/' ? path === '/' : path.startsWith(href);
+    if (isActive) link.classList.add('active');
+  });
+</script>
+
+<script>
+  // Hamburger + mobile search toggle
+  const hamburgerBtn = document.getElementById('hamburger-btn');
+  const mobileNav = document.getElementById('mobile-nav');
+  const hamIcon = document.getElementById('ham-icon');
+  const closeIcon = document.getElementById('close-icon');
+  let navOpen = false;
+
+  function openMobileNav() {
+    navOpen = true;
+    hamburgerBtn?.setAttribute('aria-expanded', 'true');
+    mobileNav?.setAttribute('aria-hidden', 'false');
+    if (mobileNav) { mobileNav.style.maxHeight = '400px'; mobileNav.style.opacity = '1'; }
+    hamIcon?.classList.add('hidden');
+    closeIcon?.classList.remove('hidden');
+  }
+
+  function closeMobileNav() {
+    navOpen = false;
+    hamburgerBtn?.setAttribute('aria-expanded', 'false');
+    mobileNav?.setAttribute('aria-hidden', 'true');
+    if (mobileNav) { mobileNav.style.maxHeight = '0'; mobileNav.style.opacity = '0'; }
+    hamIcon?.classList.remove('hidden');
+    closeIcon?.classList.add('hidden');
+  }
+
+  hamburgerBtn?.addEventListener('click', () => {
+    navOpen ? closeMobileNav() : openMobileNav();
+  });
+
+  // Close drawer when any mobile nav link (including Carrito) is clicked
+  document.querySelectorAll<HTMLElement>('.mobile-nav-link, #drawer-cart-btn').forEach((el) => {
+    el.addEventListener('click', closeMobileNav);
+  });
+
+  // Close drawer on View Transition navigation (astro:before-preparation fires before page swap)
+  document.addEventListener('astro:before-preparation', closeMobileNav);
+  // Also reset icon state after each page load in case of back/forward
+  document.addEventListener('astro:page-load', () => {
+    navOpen = false;
+    if (mobileNav) { mobileNav.style.maxHeight = '0'; mobileNav.style.opacity = '0'; }
+    hamIcon?.classList.remove('hidden');
+    closeIcon?.classList.add('hidden');
+  });
+
 </script>

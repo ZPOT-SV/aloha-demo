@@ -1,18 +1,23 @@
 /** @type {import('tailwindcss').Config} */
 export default {
-  content: ['./src/**/*.{astro,html,js,jsx,md,mdx,svelte,ts,tsx,vue}'],
+  content: ["./src/**/*.{astro,html,js,jsx,md,mdx,svelte,ts,tsx,vue}"],
   theme: {
     extend: {
       colors: {
-        brand: '#800080',
-        cta: '#FF00FF',
-        highlight: '#FFD700',
-        accent: '#00FFFF',
-        'deep-cta': '#FF1493',
-        surface: '#F5F5F5',
-        'text-muted': '#6B7280'
-      }
-    }
+        brand: "#4EC5D4",
+        cta: "#FF4D5A",
+        highlight: "#F6C445",
+        accent: "#FF2F92",
+        "deep-cta": "#E03545",
+        surface: "#FFF6E8",
+        "text-muted": "#555555",
+      },
+      fontFamily: {
+        sans: ["Inter", "ui-sans-serif", "system-ui", "sans-serif"],
+        heading: ["Poppins", "ui-sans-serif", "system-ui", "sans-serif"],
+        accent: ["Pacifico", "cursive"],
+      },
+    },
   },
-  plugins: []
+  plugins: [],
 };
