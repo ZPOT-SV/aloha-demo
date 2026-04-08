@@ -2,27 +2,27 @@
   {
     "id": "s1",
     "name": "Aloha Bowls — CC Hillside",
-    "address": "CC Hillside, Calle La Mascota, San Salvador",
+    "address": "Hillside Mall, C. La Mascota 520, San Salvador",
     "phone": "+503 7000-0000",
     "hours": {
       "lunes-viernes": "9:30 AM – 6:00 PM",
       "sabado": "9:30 AM – 2:00 PM",
       "domingo": "Cerrado"
     },
-    "lat": 13.7016,
-    "lng": -89.2278
+    "lat": 13.70201,
+    "lng": -89.23044
   },
   {
     "id": "s2",
     "name": "Aloha Bowls — Multiplaza",
-    "address": "Centro Comercial Multiplaza, Antiguo Cuscatlán, La Libertad",
+    "address": "Multiplaza, Carr. Panamericana, San Salvador",
     "phone": "+503 7000-0001",
     "hours": {
       "lunes-viernes": "11:00 AM – 8:00 PM",
       "sabado": "11:00 AM – 8:00 PM",
       "domingo": "11:00 AM – 4:00 PM"
     },
-    "lat": 13.6741,
-    "lng": -89.2541
+    "lat": 13.67572,
+    "lng": -89.25406
   }
 ]

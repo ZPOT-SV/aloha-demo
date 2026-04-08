@@ -3,6 +3,7 @@ import { useEffect, useState } from "react";
 import { useStore } from "@nanostores/react";
 
 import {
+  cart,
   cartOpen,
   selectedStore,
   setCartOpen,
@@ -41,6 +42,8 @@ export default function CartFlow() {
   const isCartOpen = useStore(cartOpen);
   const activeStore = useStore(selectedStore);
   const currentUser = useStore(userSession);
+  const cartItems = useStore(cart);
+  const isGiftCardOnly = cartItems.length > 0 && cartItems.every((i) => i.category === "gift-card");
   const [state, setState] = useState<CartFlowState>("idle");
   const [successData, setSuccessData] = useState<SuccessData | null>(null);
   const [authPromptOpen, setAuthPromptOpen] = useState(false);
@@ -83,6 +86,11 @@ export default function CartFlow() {
             return;
           }
 
+          if (isGiftCardOnly) {
+            setState("payment");
+            return;
+          }
+
           setState("store-selection");
         }}
       />
@@ -105,7 +113,8 @@ export default function CartFlow() {
       <PaymentModal
         open={state === "payment"}
         onCancel={() => {
-          setState("store-selection");
+          setState(isGiftCardOnly ? "cart-open" : "store-selection");
+          if (isGiftCardOnly) setCartOpen(true);
         }}
         onConfirm={(result) => {
           setSuccessData(result);

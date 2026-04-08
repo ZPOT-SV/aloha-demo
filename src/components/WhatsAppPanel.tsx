@@ -147,8 +147,7 @@ export default function WhatsAppPanel({
             </p>
             <p className="text-xs text-text-muted">{notifPhone}</p>
             <div className="mt-3 flex">
-              <div className="max-w-[85%] rounded-[1.5rem] rounded-tl-md bg-[#DCF8C6] px-4 py-3 text-sm leading-6 text-slate-800 shadow-sm">
-                {storeMessage}
+              <div className="w-full rounded-[1.5rem] rounded-tl-md bg-[#DCF8C6] px-4 py-3 text-sm leading-6 text-slate-800 shadow-sm break-words">
               </div>
             </div>
             <div className="mt-3 flex items-center gap-3">
@@ -190,7 +189,7 @@ export default function WhatsAppPanel({
                 {customerPhone || "+503 0000-0000"}
               </p>
               <div className="mt-3 flex">
-                <div className="max-w-[85%] rounded-[1.5rem] rounded-tl-md bg-[#DCF8C6] px-4 py-3 text-sm leading-6 text-slate-800 shadow-sm">
+                <div className="w-full rounded-[1.5rem] rounded-tl-md bg-[#DCF8C6] px-4 py-3 text-sm leading-6 text-slate-800 shadow-sm break-words">
                   {customerMessage}
                 </div>
               </div>
