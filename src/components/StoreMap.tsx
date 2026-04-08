@@ -34,9 +34,9 @@ export default function StoreMap() {
       const L = leafletModule.default;
       const alohaPin = L.divIcon({
         className: "aloha-map-pin",
-        html: '<div style="display:grid;place-items:center;width:36px;height:36px;border-radius:9999px;background:#4EC5D4;color:#ffffff;font-weight:800;box-shadow:0 10px 25px rgba(78,197,212,0.35)">A</div>',
-        iconSize: [36, 36],
-        iconAnchor: [18, 18],
+        html: '<div style="width:52px;height:52px;border-radius:9999px;background:white;padding:4px;box-shadow:0 8px 20px rgba(0,0,0,0.25);display:flex;align-items:center;justify-content:center;overflow:hidden"><img src="/logo.png" style="width:44px;height:44px;object-fit:contain" /></div>',
+        iconSize: [52, 52],
+        iconAnchor: [26, 26],
       });
 
       const map = L.map("aloha-store-map", {

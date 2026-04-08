@@ -1,5 +1,5 @@
-export type UserRole = 'customer' | 'admin';
-export type UserTierId = 'rise' | 'vibe' | 'aloha';
+export type UserRole = "customer" | "admin";
+export type UserTierId = "rise" | "vibe" | "aloha";
 
 export interface User {
   id: string;
@@ -11,27 +11,48 @@ export interface User {
   createdAt: string;
 }
 
-export type MenuParentCategory = 'bebidas' | 'bowls' | 'temporada';
+export type MenuCategory =
+  | "bowls"
+  | "bebidas"
+  | "temporada"
+  | "build-your-own"
+  | "gift-card";
 
-export type MenuSubCategory =
-  | 'cafes'
-  | 'jugos'
-  | 'dragon-fruit'
-  | 'acai'
-  | 'banana'
-  | 'temporada';
+export type MenuTag =
+  | "regular"
+  | "temporada"
+  | "proteina"
+  | "picante"
+  | "personalizable";
+
+export interface BuildYourOwnConfig {
+  bases: string[];
+  fruits: string[];
+  toppings: string[];
+  rules: {
+    maxFruits: number;
+    maxToppings: number;
+  };
+}
+
+export interface GiftCardConfig {
+  amounts: number[];
+}
 
 export interface MenuItem {
   id: string;
   name: string;
   description: string;
-  category: MenuParentCategory;
-  subCategory: MenuSubCategory;
+  ingredients: string[];
+  category: MenuCategory;
+  tags: MenuTag[];
   priceUSD: number;
+  price: Record<string, number>;
   tikiEarn: number;
-  imageUrl: string;
+  img_url: string;
   calories?: number;
-  sizesUSD?: { '12oz': number; '16oz': number };
+  buildConfig?: BuildYourOwnConfig;
+  giftCardConfig?: GiftCardConfig;
 }
 
 export interface CartItem {
@@ -55,7 +76,7 @@ export interface StoreLocation {
   address: string;
   phone: string;
   hours: {
-    'lunes-viernes': string;
+    "lunes-viernes": string;
     sabado: string;
     domingo?: string;
   };
@@ -68,6 +89,7 @@ export interface Reward {
   name: string;
   description: string;
   tikiCost: number;
+  emoji?: string;
   isActive: boolean;
   expiresAt: string | null;
 }

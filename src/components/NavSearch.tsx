@@ -7,7 +7,7 @@ interface MenuItem {
   name: string;
   description: string;
   category: string;
-  subCategory: string;
+  tags: string[];
   priceUSD: number;
 }
 
@@ -74,7 +74,7 @@ const PAGES: Result[] = [
     type: "page",
     title: "Gift Cards",
     subtitle: "Tarjetas de regalo",
-    href: "/gift-cards",
+    href: "/menu",
     emoji: "🎁",
     badge: "Página",
   },
@@ -111,7 +111,7 @@ export default function NavSearch() {
         item.name.toLowerCase().includes(q) ||
         item.description.toLowerCase().includes(q) ||
         item.category.toLowerCase().includes(q) ||
-        item.subCategory.toLowerCase().includes(q)
+        item.tags.some((t) => t.toLowerCase().includes(q))
       ) {
         found.push({
           type: "menu",

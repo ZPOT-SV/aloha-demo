@@ -1,5 +1,6 @@
 ---
 import ChallengesWidget from '../components/ChallengesWidget';
+import DashboardQRCard from '../components/DashboardQRCard';
 import SelectedStoreCard from '../components/SelectedStoreCard';
 import TikiTracker from '../components/TikiTracker';
 import TransactionFeed from '../components/TransactionFeed';
@@ -7,13 +8,13 @@ import Layout from '../layouts/Layout.astro';
 ---
 
 <Layout title="Dashboard | Aloha Loyalty" requiresAuth={true} customerOnly={true}>
-  <section class="mx-auto max-w-6xl px-6 py-16">
-    <div class="grid gap-6 lg:grid-cols-[1.4fr_0.6fr]">
-      <div class="space-y-6">
+  <section class="mx-auto w-full max-w-[1400px] px-4 py-10 sm:px-8 md:py-14">
+    <div class="grid gap-8 lg:grid-cols-[1.4fr_0.6fr] lg:gap-10">
+      <div class="space-y-8">
         <TikiTracker client:load />
         <ChallengesWidget client:visible />
 
-        <section class="rounded-[2rem] border border-brand/10 bg-white/90 p-6 shadow-2xl shadow-brand/10">
+        <section class="rounded-[2rem] border border-brand/10 bg-white/90 p-7 shadow-2xl shadow-brand/10">
           <p class="text-sm font-semibold uppercase tracking-[0.24em] text-text-muted">Acciones rápidas</p>
           <div class="mt-5 flex flex-wrap gap-3">
             <a
@@ -28,17 +29,12 @@ import Layout from '../layouts/Layout.astro';
             >
               Mis Tiendas
             </a>
-            <a
-              class="rounded-full border border-brand px-5 py-3 text-sm font-bold text-brand transition hover:bg-brand hover:text-white"
-              href="/gift-cards"
-            >
-              Gift Cards
-            </a>
           </div>
         </section>
       </div>
 
-      <div class="space-y-6">
+      <div class="space-y-8">
+        <DashboardQRCard client:load />
         <TransactionFeed client:visible />
         <SelectedStoreCard client:load />
       </div>

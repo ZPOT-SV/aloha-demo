@@ -1,25 +1,46 @@
 [
   {
     "id": "r1",
-    "name": "Bebida Gratis",
-    "description": "Canjea tus tikis por una bebida seleccionada del menú.",
-    "tikiCost": 50,
+    "name": "Topping Extra",
+    "description": "Añadí un topping gratis a cualquier bowl.",
+    "tikiCost": 20,
+    "emoji": "✨",
     "isActive": true,
     "expiresAt": "2026-12-31T23:59:59.000Z"
   },
   {
     "id": "r2",
+    "name": "Bebida Gratis",
+    "description": "Cualquier bebida del menú completamente gratis.",
+    "tikiCost": 40,
+    "emoji": "🥤",
+    "isActive": true,
+    "expiresAt": "2026-12-31T23:59:59.000Z"
+  },
+  {
+    "id": "r3",
     "name": "Descuento 20%",
-    "description": "Recibe un 20% de descuento en tu próxima compra.",
-    "tikiCost": 80,
+    "description": "20% de descuento en tu próxima compra.",
+    "tikiCost": 60,
+    "emoji": "🏷️",
     "isActive": true,
     "expiresAt": "2026-11-30T23:59:59.000Z"
   },
   {
-    "id": "r3",
+    "id": "r4",
+    "name": "Combo del Día",
+    "description": "Bowl + bebida del día a mitad de precio.",
+    "tikiCost": 90,
+    "emoji": "🎯",
+    "isActive": true,
+    "expiresAt": "2026-12-31T23:59:59.000Z"
+  },
+  {
+    "id": "r5",
     "name": "Bowl Gratis",
-    "description": "Disfruta un bowl gratis al alcanzar el canje requerido.",
+    "description": "Un bowl a tu elección, completamente gratis.",
     "tikiCost": 120,
+    "emoji": "🍣",
     "isActive": true,
     "expiresAt": "2027-01-15T23:59:59.000Z"
   }

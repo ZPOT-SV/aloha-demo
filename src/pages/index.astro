@@ -1,41 +1,73 @@
 ---
+import HeroOffersWidget from '../components/HeroOffersWidget';
 import ProductCarousel from '../components/ProductCarousel';
 import Layout from '../layouts/Layout.astro';
 
 const tiers = [
   {
-    emoji: '🌺',
+    emoji: '🌊',
     name: 'Rise',
     range: '0–49 Tikis',
-    benefit: 'Acceso a beneficios de bienvenida y retos iniciales.'
+    benefit: 'Acceso a beneficios de bienvenida y retos iniciales.',
+    color: 'bg-brand',
+    shadow: 'shadow-brand/30'
   },
   {
-    emoji: '🌊',
+    emoji: '🤙🏻',
     name: 'Vibe',
     range: '50–149 Tikis',
-    benefit: 'Bonos sorpresa y promociones especiales cada mes.'
+    benefit: 'Bonos sorpresa y promociones especiales cada mes.',
+    color: 'bg-highlight',
+    shadow: 'shadow-highlight/30'
   },
   {
-    emoji: '🏄',
+    emoji: '🌺',
     name: 'Aloha',
     range: '150+',
-    benefit: 'Canjes premium y prioridad en nuevas experiencias.'
+    benefit: 'Canjes premium y prioridad en nuevas experiencias.',
+    color: 'bg-accent',
+    shadow: 'shadow-accent/30'
   }
 ];
 ---
 
 <Layout title="Aloha Loyalty" requiresAuth={false}>
 
+  <!-- ░░ CAROUSEL — Productos más vendidos ░░ -->
+  <section class="bg-[#FFF6E8] py-14">
+    <div class="mx-auto max-w-6xl px-6">
+      <div class="grid items-center gap-12 lg:grid-cols-[1fr_1.1fr]">
+        <div data-animate class="space-y-4">
+          <p class="text-xs font-bold uppercase tracking-[0.3em] text-brand">Menú destacado</p>
+          <h2 class="font-heading text-4xl font-black leading-tight text-slate-950 md:text-5xl">
+            Productos<br/>más vendidos
+          </h2>
+          <p class="max-w-sm leading-relaxed text-text-muted">
+            Descubrí nuestras opciones más populares. Cada compra suma Tikis para tus premios.
+          </p>
+          <a href="/menu" class="inline-flex items-center gap-2 text-sm font-bold text-brand transition hover:text-deep-cta">
+            Ver menú completo
+            <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
+          </a>
+        </div>
+        <div data-animate>
+          <ProductCarousel client:load />
+        </div>
+      </div>
+    </div>
+  </section>
+
   <!-- ░░ HERO ░░ -->
-  <section class="mx-auto grid max-w-6xl items-center gap-12 px-6 pb-16 pt-14 lg:grid-cols-[1.1fr_0.9fr]">
-    <div class="space-y-8">
+  <section class="bg-[#FFF6E8] pb-10 pt-8 md:pt-12">
+  <div class="mx-auto grid max-w-6xl items-center gap-8 px-6 lg:grid-cols-[1.1fr_0.9fr]">
+    <div id="hero-logged-out-text" class="space-y-6">
       <div class="space-y-4">
         <h1 class="max-w-xl text-5xl font-black leading-[1.1] tracking-tight text-slate-950 md:text-6xl">
           Acumulá Tikis,<br/>
           <span class="bg-gradient-to-r from-brand to-accent bg-clip-text text-transparent">Viví la Experiencia</span>
         </h1>
         <p class="max-w-lg text-lg leading-relaxed text-text-muted md:text-xl">
-          Ganás 1 Tiki por cada $1 que comprás. Canjeá premios, completá retos y subí de nivel.
+          Por cada dólar que gastes, acumula un tiki que te sirve para desbloquear recompensas y subir de nivel para acceder a más beneficios
         </p>
       </div>
 
@@ -61,42 +93,16 @@ const tiers = [
       <img src="/tiki.png" alt="Tiki mascot" class="w-full max-w-sm drop-shadow-2xl" />
     </div>
 
-    <!-- Balance widget (logged in only) -->
-    <div id="hero-widget" class="hidden overflow-hidden rounded-[2rem] border border-brand/10 bg-white shadow-2xl shadow-brand/10">
-      <div class="bg-gradient-to-br from-brand to-[#2F80ED] p-6 text-white">
-        <p id="hero-balance-label" class="text-xs font-bold uppercase tracking-[0.3em] text-white/75">
-          Saldo
-        </p>
-        <p id="hero-balance-value" class="mt-3 text-6xl font-black">0</p>
-        <p class="mt-1 text-base font-semibold text-white/90">Tikis listos para canjear</p>
-      </div>
-      <div class="divide-y divide-slate-50">
-        <div class="flex items-center gap-3 px-6 py-4">
-          <span class="text-2xl">🌊</span>
-          <div>
-            <p class="text-xs font-semibold text-text-muted">Nivel actual</p>
-            <p id="hero-tier-name" class="font-bold text-brand">Rise</p>
-          </div>
-        </div>
-        <div class="flex items-center gap-3 px-6 py-4">
-          <span class="text-2xl">🎁</span>
-          <div>
-            <p class="text-xs font-semibold text-text-muted">Premio cercano</p>
-            <p class="font-bold text-slate-900">Bebida Gratis</p>
-          </div>
-        </div>
-        <div class="flex items-center gap-3 px-6 py-4">
-          <span class="text-2xl">⚡</span>
-          <div>
-            <p class="text-xs font-semibold text-text-muted">Reto activo</p>
-            <p class="font-bold text-slate-900">Comprador Frecuente</p>
-          </div>
-        </div>
+    <!-- Balance widget (logged in only) — spans both columns -->
+    <div id="hero-widget" class="hidden lg:col-span-2">
+      <div class="mx-auto max-w-2xl">
+        <HeroOffersWidget client:load />
       </div>
     </div>
+  </div>
   </section>
 
-  <!-- ░░ HOW IT WORKS — full-width band ░░ -->
+  <!-- ░░ CÓMO FUNCIONA + NIVELES — merged ░░ -->
   <section class="bg-[#FFF6E8] py-16">
     <div class="mx-auto max-w-6xl px-6">
       <p data-animate class="text-center text-xs font-bold uppercase tracking-[0.3em] text-text-muted">Cómo funciona</p>
@@ -120,95 +126,60 @@ const tiers = [
           <p class="mt-2 text-sm leading-relaxed text-text-muted">Usá tus Tikis por bebidas gratis, descuentos y experiencias exclusivas.</p>
         </div>
       </div>
-    </div>
-  </section>
 
-  <!-- ░░ CAROUSEL — Productos más vendidos ░░ -->
-  <section class="mx-auto max-w-6xl px-6 py-20">
-    <div class="grid items-center gap-12 lg:grid-cols-[1fr_1.1fr]">
-      <div data-animate class="space-y-4">
-        <p class="text-xs font-bold uppercase tracking-[0.3em] text-brand">Menú destacado</p>
-        <h2 class="font-heading text-4xl font-black leading-tight text-slate-950 md:text-5xl">
-          Productos<br/>más vendidos
+      <!-- Divider -->
+      <div class="mt-14 border-t border-slate-200/70"></div>
+
+      <!-- Subí de nivel -->
+      <div class="mt-14">
+        <p data-animate class="text-center text-xs font-bold uppercase tracking-[0.3em] text-text-muted">Subí de nivel</p>
+        <h2 data-animate class="mt-2 text-center font-heading text-3xl font-black text-slate-950 md:text-4xl">
+          Tres niveles, más beneficios
         </h2>
-        <p class="max-w-sm text-text-muted leading-relaxed">
-          Descubrí nuestras opciones más populares. Cada compra suma Tikis para tus premios.
-        </p>
-        <a href="/menu" class="inline-flex items-center gap-2 text-sm font-bold text-brand transition hover:text-deep-cta">
-          Ver menú completo
-          <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
-        </a>
-      </div>
-
-      <div data-animate>
-        <ProductCarousel client:load />
-      </div>
-    </div>
-  </section>
-
-  <!-- ░░ TIERS — clean rows ░░ -->
-  <section class="bg-[#FFF6E8] py-16">
-    <div class="mx-auto max-w-6xl px-6">
-      <p data-animate class="text-xs font-bold uppercase tracking-[0.3em] text-text-muted">Niveles</p>
-      <h2 data-animate class="mt-2 font-heading text-3xl font-black text-slate-950 md:text-4xl">Subí de nivel</h2>
-      <div class="mt-8 space-y-3">
-        {tiers.map((tier, i) => (
-          <div data-animate class="flex items-center gap-5 rounded-2xl border border-brand/10 bg-white px-6 py-5 shadow-sm">
-            <span class="text-4xl">{tier.emoji}</span>
-            <div class="min-w-0 flex-1">
-              <div class="flex flex-wrap items-center gap-3">
-                <h3 class="text-lg font-bold text-slate-900">{tier.name}</h3>
-                <span class="rounded-full bg-brand/10 px-3 py-0.5 text-xs font-bold text-brand">{tier.range}</span>
+        <div class="mt-10 grid gap-0 md:grid-cols-3">
+          {tiers.map((tier, i) => (
+            <div
+              data-animate
+              class={`group relative flex flex-col items-center px-8 py-6 text-center ${
+                i < tiers.length - 1 ? 'md:border-r md:border-dashed md:border-slate-200' : ''
+              }`}
+            >
+              <div class="grid h-14 w-14 place-items-center rounded-2xl text-2xl">
+                {tier.emoji}
               </div>
-              <p class="mt-1 text-sm text-text-muted">{tier.benefit}</p>
+              <h3 class="mt-4 text-xl font-bold text-slate-900">{tier.name}</h3>
+              <span class="mt-1 rounded-full bg-slate-100 px-3 py-0.5 text-xs font-bold text-slate-500">{tier.range}</span>
+              <p class="mt-3 text-sm leading-relaxed text-text-muted">{tier.benefit}</p>
             </div>
-            <div class={`shrink-0 h-2 w-2 rounded-full ${i === 0 ? 'bg-highlight' : i === 1 ? 'bg-brand' : 'bg-accent'}`}></div>
-          </div>
-        ))}
+          ))}
+        </div>
       </div>
     </div>
   </section>
   <script>
-    import { tikiBalance, userSession } from '../stores';
-
-    const getTierName = (tikis: number): string => {
-      if (tikis >= 150) return 'Aloha 🏄';
-      if (tikis >= 50) return 'Vibe 🌊';
-      return 'Rise 🌺';
-    };
+    import { userSession } from '../stores';
 
     const syncHero = (): void => {
       const heroButton = document.getElementById('hero-open-auth');
       const heroTiki = document.getElementById('hero-tiki');
       const heroWidget = document.getElementById('hero-widget');
-      const heroBalanceValue = document.getElementById('hero-balance-value');
-      const heroTierName = document.getElementById('hero-tier-name');
+      const heroText = document.getElementById('hero-logged-out-text');
       const session = userSession.get();
       const loggedIn = session?.role === 'customer';
 
       heroButton?.classList.toggle('hidden', session !== null);
       heroTiki?.classList.toggle('hidden', loggedIn);
       heroWidget?.classList.toggle('hidden', !loggedIn);
-
-      if (loggedIn) {
-        const tikis = tikiBalance.get();
-        if (heroBalanceValue) heroBalanceValue.textContent = String(tikis);
-        if (heroTierName) heroTierName.textContent = getTierName(tikis);
-      }
+      if (heroText) heroText.style.display = loggedIn ? 'none' : '';
     };
 
     const handleHeroAuthClick = (event: Event): void => {
       const target = event.target;
-
-      if (!(target instanceof Element) || !target.closest('#hero-open-auth')) {
-        return;
-      }
-
+      if (!(target instanceof Element) || !target.closest('#hero-open-auth')) return;
       window.dispatchEvent(new CustomEvent('aloha:open-auth'));
     };
 
     userSession.subscribe(syncHero);
-    tikiBalance.subscribe(syncHero);
     document.addEventListener('click', handleHeroAuthClick);
     document.addEventListener('astro:page-load', syncHero);
     syncHero();

@@ -13,83 +13,99 @@ import NavSearch from './NavSearch';
   <div class="relative mx-auto max-w-6xl px-4 sm:px-6">
 
     <!-- ── BAR ROW (stays inside the 52px yellow strip) ─────────────── -->
-    <div class="flex items-center gap-3" style="height:52px">
+    <div class="relative flex items-center" style="height:52px">
 
       <!-- Width-placeholder (desktop only — logo is centered on mobile) -->
       <div class="hidden shrink-0 md:block md:w-36" aria-hidden="true"></div>
 
-      <!-- Desktop nav -->
-      <nav class="hidden items-center gap-1 md:flex">
-        <a class="nav-link group" href="/">
+      <!-- Desktop nav — flex centered (no absolute to avoid search bar overlap) -->
+      <nav class="hidden md:flex flex-1 items-center justify-center gap-1 px-2">
+        <a class="nav-link" href="/">
           <span class="nav-icon">
             <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="m3 9 9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
           </span>
-          <span>Inicio</span>
-          <span class="nav-underline"></span>
+          <span class="nav-label">Inicio</span>
         </a>
-        <a class="nav-link group" href="/menu">
+        <a class="nav-link" href="/menu">
           <span class="nav-icon">
             <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 2v7c0 1.1.9 2 2 2h4a2 2 0 0 0 2-2V2"/><path d="M7 2v20"/><path d="M21 15V2a5 5 0 0 0-5 5v6c0 1.1.9 2 2 2h3Zm0 0v7"/></svg>
           </span>
-          <span>Menú</span>
-          <span class="nav-underline"></span>
+          <span class="nav-label">Menú</span>
         </a>
-        <a class="nav-link group" href="/tiendas">
+        <a class="nav-link" href="/tiendas">
           <span class="nav-icon">
-            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9h18v10a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V9Z"/><path d="m3 9 2.45-4.9A2 2 0 0 1 7.24 3h9.52a2 2 0 0 1 1.8 1.1L21 9"/><path d="M12 3v6"/></svg>
+            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0Z"/><circle cx="12" cy="10" r="3"/></svg>
           </span>
-          <span>Tiendas</span>
-          <span class="nav-underline"></span>
+          <span class="nav-label">Locaciones</span>
         </a>
-        <a class="nav-link group" href="/retos">
+        <a class="nav-link" href="/retos">
           <span class="nav-icon">
             <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9H4.5a2.5 2.5 0 0 1 0-5H6"/><path d="M18 9h1.5a2.5 2.5 0 0 0 0-5H18"/><path d="M4 22h16"/><path d="M10 14.66V17c0 .55-.47.98-.97 1.21C7.85 18.75 7 20.24 7 22"/><path d="M14 14.66V17c0 .55.47.98.97 1.21C16.15 18.75 17 20.24 17 22"/><path d="M18 2H6v7a6 6 0 0 0 12 0V2Z"/></svg>
           </span>
-          <span>Retos</span>
-          <span class="nav-underline"></span>
+          <span class="nav-label">Retos</span>
+        </a>
+        <a id="nav-dashboard-link" class="nav-link" style="display:none" href="/dashboard">
+          <span class="nav-icon">
+            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+          </span>
+          <span class="nav-label">Cuenta</span>
         </a>
       </nav>
 
-      <!-- Desktop search (fills space between nav and right icons) -->
-      <div class="hidden flex-1 md:block">
-        <NavSearch client:load />
-      </div>
-
       <!-- Right actions -->
-      <div class="ml-auto flex items-center gap-2">
+      <div class="ml-auto flex items-center gap-1">
 
-        <!-- Cart -->
+        <!-- Collapsible search (desktop only) -->
+        <div id="search-area" class="hidden md:flex items-center">
+          <button id="search-toggle-btn" type="button"
+            class="p-2 rounded-full text-slate-800 transition hover:bg-black/8"
+            aria-label="Buscar">
+            <svg xmlns="http://www.w3.org/2000/svg" width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/></svg>
+          </button>
+          <div id="search-expand-box" data-open="false"
+            style="max-width:0;overflow:hidden;opacity:0;transition:max-width 0.3s cubic-bezier(0.4,0,0.2,1),opacity 0.25s ease">
+            <NavSearch client:load />
+          </div>
+        </div>
+
+        <!-- Cart — icon only, hover = pink -->
         <button id="cart-button" type="button"
-          class="relative hidden rounded-full border border-black/15 bg-black/8 p-2.5 text-slate-900 transition hover:bg-black/15 hover:scale-105 md:inline-flex">
+          class="relative hidden p-2 text-slate-800 transition hover:text-accent md:inline-flex">
           <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><circle cx="8" cy="21" r="1"/><circle cx="19" cy="21" r="1"/><path d="M2.05 2.05h2l2.66 12.42a2 2 0 0 0 2 1.58h9.78a2 2 0 0 0 1.95-1.57l1.65-7.43H5.12"/></svg>
           <span id="cart-count"
-            class="absolute -right-1.5 -top-1.5 hidden min-w-5 rounded-full bg-cta px-1 py-0.5 text-center text-[10px] font-bold text-white">0</span>
+            class="absolute -right-0.5 -top-0.5 hidden min-w-4 rounded-full bg-cta px-1 py-0.5 text-center text-[9px] font-bold text-white leading-none">0</span>
         </button>
 
-        <!-- Login button -->
+        <!-- Login button — icon only, text expands on hover -->
         <button id="login-button" type="button"
-          class="hidden items-center gap-1.5 whitespace-nowrap rounded-full bg-accent px-3 py-2 text-sm font-bold text-white shadow-lg shadow-accent/30 transition hover:brightness-110 hover:scale-105 md:px-4">
+          style="display:none"
+          class="items-center rounded-full bg-accent p-2.5 text-white shadow-md shadow-accent/30 transition hover:brightness-110">
           <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M15 3h4a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2h-4"/><polyline points="10 17 15 12 10 7"/><line x1="15" y1="12" x2="3" y2="12"/></svg>
-          <span class="hidden sm:inline">Iniciar Sesión</span>
+          <span class="login-label">Iniciar Sesión</span>
         </button>
 
         <!-- User actions (logged-in) -->
         <div id="user-actions" class="hidden items-center gap-2">
-          <div class="hidden shrink-0 rounded-full bg-black/10 px-3 py-2 text-sm font-bold text-slate-900 border border-black/15 sm:block">
-            <span id="user-tikis">0</span> Tikis
-          </div>
-          <a href="/dashboard"
-            class="flex items-center gap-1.5 rounded-full border border-black/15 bg-black/8 px-3 py-2 text-sm font-semibold text-slate-900 transition hover:bg-black/15">
-            <span id="user-tier-emoji" class="shrink-0">🌺</span>
-            <span id="user-name" class="hidden max-w-[7rem] truncate sm:block">Invitado</span>
+          <!-- QR quick-open button -->
+          <button id="nav-qr-btn" type="button"
+            class="hidden p-2 text-slate-800 transition hover:text-accent md:inline-flex"
+            aria-label="Mi QR de puntos">
+            <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/><rect x="14" y="14" width="3" height="3"/><path d="M17 17h4v4"/><path d="M21 17v4h-4"/></svg>
+          </button>
+          <!-- Profile avatar → goes to /dashboard -->
+          <a id="nav-avatar-link" href="/dashboard"
+            class="flex h-9 w-9 shrink-0 items-center justify-center overflow-hidden rounded-full border-2 border-white/50 bg-brand shadow-md shadow-brand/30 transition hover:brightness-90">
+            <span id="nav-avatar-fallback" class="flex h-full w-full items-center justify-center text-sm font-black text-white">
+              <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+            </span>
           </a>
           <button id="logout-button" type="button"
-            class="hidden whitespace-nowrap text-sm font-semibold text-slate-600 transition hover:text-slate-900 sm:block">Salir</button>
+            class="hidden whitespace-nowrap text-sm font-semibold text-slate-700 transition hover:text-slate-900 sm:block">Salir</button>
         </div>
 
         <!-- Hamburger (mobile only) -->
         <button id="hamburger-btn" type="button"
-          class="md:hidden ml-1 rounded-full border border-black/15 bg-black/8 p-2.5 text-slate-900 transition hover:bg-black/15"
+          class="md:hidden ml-1 rounded-full p-2.5 text-slate-900 transition hover:bg-black/10"
           aria-label="Menú" aria-expanded="false">
           <svg id="ham-icon" xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
             <line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/>
@@ -133,12 +149,16 @@ import NavSearch from './NavSearch';
         Menú
       </a>
       <a class="mobile-nav-link" href="/tiendas">
-        <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9h18v10a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V9Z"/><path d="m3 9 2.45-4.9A2 2 0 0 1 7.24 3h9.52a2 2 0 0 1 1.8 1.1L21 9"/><path d="M12 3v6"/></svg>
-        Tiendas
+        <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0Z"/><circle cx="12" cy="10" r="3"/></svg>
+        Locaciones
       </a>
       <a class="mobile-nav-link" href="/retos">
         <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9H4.5a2.5 2.5 0 0 1 0-5H6"/><path d="M18 9h1.5a2.5 2.5 0 0 0 0-5H18"/><path d="M4 22h16"/><path d="M10 14.66V17c0 .55-.47.98-.97 1.21C7.85 18.75 7 20.24 7 22"/><path d="M14 14.66V17c0 .55.47.98.97 1.21C16.15 18.75 17 20.24 17 22"/><path d="M18 2H6v7a6 6 0 0 0 12 0V2Z"/></svg>
         Retos
+      </a>
+      <a id="drawer-dashboard-link" class="mobile-nav-link" style="display:none" href="/dashboard">
+        <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+        Mi Cuenta
       </a>
 
       <!-- Divider -->
@@ -162,11 +182,17 @@ import NavSearch from './NavSearch';
 
       <!-- User section (shown when logged in) -->
       <div id="drawer-user-section" class="hidden flex-col gap-1">
+        <!-- Profile row → Dashboard -->
         <a href="/dashboard" class="mobile-nav-link">
           <span id="drawer-user-tier">🌺</span>
           <span id="drawer-user-name" class="truncate">Invitado</span>
           <span class="ml-auto shrink-0 rounded-full bg-black/10 px-2 py-1 text-xs font-bold"><span id="drawer-user-tikis">0</span> Tikis</span>
         </a>
+        <!-- QR de puntos -->
+        <button id="drawer-qr-btn" type="button" class="mobile-nav-link w-full text-left">
+          <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/><rect x="14" y="14" width="3" height="3"/><path d="M17 17h4v4"/><path d="M21 17v4h-4"/></svg>
+          Mi QR de puntos
+        </button>
         <button id="drawer-logout-btn" type="button" class="mobile-nav-link w-full text-left text-red-800">
           <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><polyline points="16 17 21 12 16 7"/><line x1="21" y1="12" x2="9" y2="12"/></svg>
           Salir
@@ -213,49 +239,71 @@ import NavSearch from './NavSearch';
     position: relative;
     display: inline-flex;
     align-items: center;
-    gap: 0.375rem;
-    padding: 0.5rem 0.875rem;
+    gap: 0;
+    padding: 0.5rem 0.625rem;
     border-radius: 9999px;
-    font-size: 0.875rem;
-    font-weight: 600;
-    color: rgba(0,0,0,0.7);
-    transition: color 0.2s ease, background 0.2s ease, transform 0.2s ease;
+    color: rgba(0,0,0,0.6);
+    transition: background 0.2s ease, color 0.2s ease;
     text-decoration: none;
   }
   .nav-link:hover {
-    color: #1a1a1a;
-    background: rgba(0,0,0,0.1);
-    transform: translateY(-1px);
+    background: rgba(0,0,0,0.08);
+    color: rgba(0,0,0,0.9);
   }
   .nav-link.active {
-    color: #1a1a1a;
-    background: rgba(0,0,0,0.1);
+    background: rgba(0,0,0,0.18);
+    color: rgba(0,0,0,1);
+    font-weight: 700;
+    box-shadow: inset 0 1px 0 rgba(255,255,255,0.35);
   }
+
+  /* Remove the tiny dot — the pill is the indicator */
 
   .nav-icon {
     display: inline-flex;
     align-items: center;
-    transition: transform 0.2s ease;
-  }
-  .nav-link:hover .nav-icon {
-    transform: scale(1.15);
+    flex-shrink: 0;
   }
 
-  .nav-underline {
-    position: absolute;
-    bottom: 4px;
-    left: 50%;
-    transform: translateX(-50%) scaleX(0);
-    width: 60%;
-    height: 2px;
-    border-radius: 1px;
-    background: rgba(0,0,0,0.4);
-    transition: transform 0.25s ease;
-    transform-origin: center;
+  .nav-label {
+    font-size: 0.875rem;
+    font-weight: 600;
+    max-width: 0;
+    overflow: hidden;
+    opacity: 0;
+    white-space: nowrap;
+    margin-left: 0;
+    transition: max-width 0.28s cubic-bezier(0.4, 0, 0.2, 1),
+                opacity 0.22s ease,
+                margin-left 0.28s ease;
   }
-  .nav-link:hover .nav-underline,
-  .nav-link.active .nav-underline {
-    transform: translateX(-50%) scaleX(1);
+  .nav-link:hover .nav-label,
+  .nav-link.active .nav-label {
+    max-width: 6rem;
+    opacity: 1;
+    margin-left: 0.375rem;
+    font-weight: 700;
+  }
+
+  /* Login label expands on hover */
+  .login-label {
+    font-size: 0.8125rem;
+    font-weight: 700;
+    max-width: 0;
+    overflow: hidden;
+    opacity: 0;
+    white-space: nowrap;
+    margin-left: 0;
+    transition: max-width 0.28s cubic-bezier(0.4, 0, 0.2, 1),
+                opacity 0.22s ease,
+                margin-left 0.28s ease,
+                padding-right 0.28s ease;
+  }
+  #login-button:hover .login-label {
+    max-width: 8rem;
+    opacity: 1;
+    margin-left: 0.375rem;
+    padding-right: 0.25rem;
   }
 
   .mobile-nav-link {
@@ -282,7 +330,58 @@ import NavSearch from './NavSearch';
     #login-button  { display: none !important; }
     #user-actions  { display: none !important; }
   }
+
+  /* Drawer logout button should never look "selected" */
+  #drawer-logout-btn {
+    background: transparent !important;
+  }
+  #drawer-logout-btn:hover {
+    background: rgba(180, 0, 0, 0.08) !important;
+  }
 </style>
+
+<script>
+  // Collapsible search toggle
+  const closeSearchBox = () => {
+    const box = document.getElementById('search-expand-box');
+    if (!box) return;
+    box.dataset.open = 'false';
+    box.style.overflow = 'hidden';
+    box.style.maxWidth = '0';
+    box.style.opacity = '0';
+  };
+
+  document.addEventListener('astro:page-load', closeSearchBox);
+
+  document.addEventListener('click', (e: MouseEvent) => {
+    const target = e.target as Element;
+    const box = document.getElementById('search-expand-box');
+    const searchArea = document.getElementById('search-area');
+    if (!box) return;
+
+    if (target.closest('#search-toggle-btn')) {
+      const isOpen = box.dataset.open === 'true';
+      if (!isOpen) {
+        box.dataset.open = 'true';
+        box.style.maxWidth = '18rem';
+        box.style.opacity = '1';
+        setTimeout(() => {
+          if (box.dataset.open === 'true') {
+            box.style.overflow = 'visible';
+            (box.querySelector('input') as HTMLInputElement | null)?.focus();
+          }
+        }, 320);
+      } else {
+        closeSearchBox();
+      }
+      return;
+    }
+
+    if (box.dataset.open === 'true' && searchArea && !searchArea.contains(target)) {
+      closeSearchBox();
+    }
+  });
+</script>
 
 <script>
   import { cart, setCartOpen } from '../stores';
@@ -328,35 +427,33 @@ import NavSearch from './NavSearch';
   const tikiKey = 'aloha_tikis';
 
   const tierEmojiMap: Record<string, string> = {
-    rise: '🌺 Rise',
-    vibe: '🌊 Vibe',
-    aloha: '🏄 Aloha'
+    rise: '🌊',
+    vibe: '🤙🏻',
+    aloha: '🌺'
   };
 
   const getTierEmoji = (tierId: User['tierId']): string => {
-    if (!tierId) {
-      return '👑';
-    }
-
-    return tierEmojiMap[tierId.toLowerCase()] ?? '🌺';
+    if (!tierId) return '👑';
+    return tierEmojiMap[tierId.toLowerCase()] ?? '🌊';
   };
 
   const syncNavbar = () => {
     const rawSession = window.localStorage.getItem(sessionKey);
     const loginButton = document.getElementById('login-button');
     const userActions = document.getElementById('user-actions');
-    const userTikis = document.getElementById('user-tikis');
-    const userTierEmoji = document.getElementById('user-tier-emoji');
-    const userName = document.getElementById('user-name');
     const drawerLogin = document.getElementById('drawer-login-section');
     const drawerUser = document.getElementById('drawer-user-section');
     const drawerUserName = document.getElementById('drawer-user-name');
     const drawerUserTier = document.getElementById('drawer-user-tier');
     const drawerUserTikis = document.getElementById('drawer-user-tikis');
+    const dashboardLink = document.getElementById('nav-dashboard-link') as HTMLAnchorElement | null;
+
+    const drawerDashboardLink = document.getElementById('drawer-dashboard-link') as HTMLAnchorElement | null;
 
     if (!rawSession) {
-      loginButton?.classList.remove('hidden');
-      loginButton?.classList.add('inline-flex');
+      if (loginButton) loginButton.style.display = 'inline-flex';
+      if (dashboardLink) dashboardLink.style.display = 'none';
+      if (drawerDashboardLink) drawerDashboardLink.style.display = 'none';
       userActions?.classList.add('hidden');
       userActions?.classList.remove('flex');
       drawerLogin?.classList.remove('hidden');
@@ -369,25 +466,21 @@ import NavSearch from './NavSearch';
       const session = JSON.parse(rawSession) as User;
       const storedTikis = Number(window.localStorage.getItem(tikiKey) ?? session.tikiBalance ?? 0);
 
-      if (userTikis) {
-        userTikis.textContent = String(storedTikis);
+      // Update avatar initial
+      const avatarFallback = document.getElementById('nav-avatar-fallback');
+      if (avatarFallback) {
+        const initial = (session.name ?? session.username ?? '?')[0].toUpperCase();
+        avatarFallback.innerHTML = `<span style="font-size:0.8rem;font-weight:900">${initial}</span>`;
       }
 
-      if (userTierEmoji) {
-        userTierEmoji.textContent = getTierEmoji(session.tierId);
-      }
-
-      if (userName) {
-        userName.textContent = session.username;
-      }
-
-      loginButton?.classList.add('hidden');
-      loginButton?.classList.remove('inline-flex');
+      if (loginButton) loginButton.style.display = 'none';
+      if (dashboardLink) dashboardLink.style.display = 'inline-flex';
+      if (drawerDashboardLink) drawerDashboardLink.style.display = 'flex';
       userActions?.classList.remove('hidden');
       userActions?.classList.add('flex');
 
       // Sync drawer user section
-      if (drawerUserName) drawerUserName.textContent = session.username;
+      if (drawerUserName) drawerUserName.textContent = session.name ?? session.username;
       if (drawerUserTier) drawerUserTier.textContent = getTierEmoji(session.tierId);
       if (drawerUserTikis) drawerUserTikis.textContent = String(storedTikis);
       drawerLogin?.classList.add('hidden');
@@ -415,6 +508,11 @@ import NavSearch from './NavSearch';
     if (target.closest('#logout-button, #drawer-logout-btn')) {
       logoutUser();
       window.location.href = '/';
+      return;
+    }
+
+    if (target.closest('#nav-qr-btn, #drawer-qr-btn')) {
+      window.dispatchEvent(new CustomEvent('aloha:open-qr'));
     }
   };
 
@@ -426,13 +524,17 @@ import NavSearch from './NavSearch';
 </script>
 
 <script>
-  // Mark active nav link based on current path
-  const path = window.location.pathname;
-  document.querySelectorAll<HTMLAnchorElement>('.nav-link, .mobile-nav-link').forEach((link) => {
-    const href = link.getAttribute('href') ?? '';
-    const isActive = href === '/' ? path === '/' : path.startsWith(href);
-    if (isActive) link.classList.add('active');
-  });
+  // Mark active nav link based on current path (only <a> elements — skip buttons)
+  function markActiveNavLinks() {
+    const path = window.location.pathname;
+    document.querySelectorAll<HTMLAnchorElement>('a.nav-link, a.mobile-nav-link').forEach((link) => {
+      const href = link.getAttribute('href') ?? '';
+      const isActive = href !== '' && (href === '/' ? path === '/' : path.startsWith(href));
+      link.classList.toggle('active', isActive);
+    });
+  }
+  markActiveNavLinks();
+  document.addEventListener('astro:page-load', markActiveNavLinks);
 </script>
 
 <script>

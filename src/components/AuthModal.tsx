@@ -40,6 +40,34 @@ const sessionKey = "aloha_session";
 const authChangedEvent = "aloha:auth-changed";
 const openAuthEvent = "aloha:open-auth";
 
+// Deterministic placeholder name so the same username always maps to the same name
+const PLACEHOLDER_NAMES = [
+  "Ana García",
+  "Carlos Martínez",
+  "Sofía López",
+  "Diego Hernández",
+  "Valentina Pérez",
+  "Andrés Torres",
+  "Camila Rodríguez",
+  "Luis Ramírez",
+  "Isabella Flores",
+  "Sebastián Morales",
+  "Daniela Cruz",
+  "Mateo Vargas",
+  "Lucía Jiménez",
+  "Emilio Reyes",
+  "Alejandra Mendoza",
+  "Ricardo Guzmán",
+];
+
+function getPlaceholderName(username: string): string {
+  let hash = 0;
+  for (let i = 0; i < username.length; i++) {
+    hash = (hash * 31 + username.charCodeAt(i)) >>> 0;
+  }
+  return PLACEHOLDER_NAMES[hash % PLACEHOLDER_NAMES.length];
+}
+
 function getStoredBalance(userId: string, fallbackBalance: number): number {
   if (typeof window === "undefined") {
     return fallbackBalance;
@@ -57,7 +85,7 @@ function buildMockUser(username: string, name?: string): User {
   return {
     id: userId,
     username,
-    name: name?.trim() || username,
+    name: name?.trim() || getPlaceholderName(username),
     role: username === "admin" ? "admin" : "customer",
     tikiBalance: getStoredBalance(userId, 0),
     tierId: username === "admin" ? null : "rise",
@@ -226,7 +254,7 @@ export default function AuthModal({ defaultTab = "login" }: AuthModalProps) {
   };
 
   const handleSocial = () => {
-    const user = buildMockUser("social-user", "Usuario Social");
+    const user = buildMockUser("social-user");
     persistSession(user);
     closeModal();
     redirectForUser(user);
